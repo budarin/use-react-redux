@@ -1,2 +1,2 @@
-# use-react-redux-hooks
+# use-react-redux-context
 React-redux based on React Hooks and React Context
