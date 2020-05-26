@@ -11,7 +11,7 @@ export { createContext } from 'use-context-selection';
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 const emptyObject = {};
 const emptyMiddlewaresArray: Array<Middleware> = [];
-const emptySelector = (x: unknown, _: React.Props<unknown>) => x;
+const emptySelector = (x: unknown, _: React.ClassAttributes<unknown>) => x;
 
 setBatch(batch);
 
@@ -66,8 +66,8 @@ export const createUseStore = (
     DispatchContext: React.Context<Dispatch<Action>>,
 ) => (
     selector = emptySelector,
-    actions: IHash<(...args: any[]) => Action> = emptyObject,
-    containerProps: React.Props<unknown> = emptyObject,
+    actions: IHash<(...args: unknown[]) => Action> = emptyObject,
+    containerProps: React.ClassAttributes<unknown> = emptyObject,
 ) => {
     const dispatch = useContext<Dispatch<Action>>(DispatchContext);
     const dispatchProps = useMemo(getDispatchedProps(actions, dispatch), [dispatch, actions]);
