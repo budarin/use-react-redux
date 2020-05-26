@@ -8,10 +8,10 @@ import compose from './utils/compose';
 
 export { createContext } from 'use-context-selection';
 
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 const emptyObject = {};
 const emptyMiddlewaresArray: Array<Middleware> = [];
 const emptySelector = (x: unknown, _: React.ClassAttributes<unknown>) => x;
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 setBatch(batch);
 
