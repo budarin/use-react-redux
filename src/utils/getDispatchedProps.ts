@@ -23,7 +23,7 @@ const getDispatchedProps = (actions: IHash<(...args: any[]) => Action>, dispatch
 
             // @ts-ignore
             if (typeof actions[key] !== 'function') {
-                console.warn(`Action ${key} in mapDispatchToProps should be a function!`);
+                console.warn(`${key} in actions must be a function!`);
                 continue;
             }
 
