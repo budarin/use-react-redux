@@ -8,7 +8,7 @@ import compose from './utils/compose';
 
 export { createContext } from 'use-context-selection';
 
-const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useLayoutEffect : useEffect;
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 const emptyObject = {};
 const emptyMiddlewaresArray: Array<Middleware> = [];
 const emptySelector = (x: unknown, _: React.Props<unknown>) => x;
