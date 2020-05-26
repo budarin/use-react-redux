@@ -47,8 +47,8 @@ const useStore = (reducer: Reducer<unknown>, initState = emptyObject, middleware
 export const createProvider = (
     StateContext: React.Context<unknown>,
     DispatchContext: React.Context<Dispatch<Action>>,
-) =>
-    memo(function StoreProvider({ reducer, initialState = emptyObject, middlewares, children }: StoreProvider) {
+) => {
+    function StoreProvider({ reducer, initialState = emptyObject, middlewares, children }: StoreProvider) {
         const { state, dispatch } = useStore(reducer, initialState, middlewares);
 
         return (
@@ -56,7 +56,10 @@ export const createProvider = (
                 <StateContext.Provider value={state}>{children}</StateContext.Provider>
             </DispatchContext.Provider>
         );
-    });
+    }
+
+    return memo(StoreProvider);
+};
 
 export const createUseStore = (
     StateContext: React.Context<unknown>,
