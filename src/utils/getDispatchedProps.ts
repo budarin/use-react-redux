@@ -1,11 +1,7 @@
 // @ts-nocheck
-const emptyObject = {};
+import bindActionCreators from './bindActionCreators';
 
-function bindActionCreators(actionCreator, dispatch) {
-    return function () {
-        return dispatch(actionCreator.apply(this, arguments));
-    };
-}
+const emptyObject = {};
 
 const getDispatchedProps = (actions, dispatch, ownProps = emptyObject) => () => {
     if (typeof actions === 'function') {
