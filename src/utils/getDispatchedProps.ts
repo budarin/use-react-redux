@@ -1,15 +1,13 @@
-// eslint-disable-next-line no-unused-vars
-import { bindActionCreators, ActionCreator, ActionCreatorsMapObject } from 'redux';
-// eslint-disable-next-line no-unused-vars
-import { ClassAttributes } from 'react';
+// @ts-nocheck
+const emptyObject = {};
 
-type ActionCreatorFunc = (args: unknown, dispatch: Dispatch<Action>) => IHash<ActionCreator<Action>>;
+function bindActionCreators(actionCreator, dispatch) {
+    return function () {
+        return dispatch(actionCreator.apply(this, arguments));
+    };
+}
 
-const getDispatchedProps = (
-    actions: ActionCreatorFunc | IHash<ActionCreator<Action>>,
-    ownProps: ClassAttributes<unknown>,
-    dispatch: Dispatch<Action>,
-) => (): ActionCreatorsMapObject<unknown> => {
+const getDispatchedProps = (actions, dispatch, ownProps = emptyObject) => () => {
     if (typeof actions === 'function') {
         return actions(ownProps, dispatch);
     }
