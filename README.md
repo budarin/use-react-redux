@@ -10,6 +10,8 @@ npm install --save @budarin/use-react-redux
 
 Высокопроизводительная библиотека управления состоянием приложения, базирующийся на React.Context и React.Hooks.
 
+Статья с описанием о реализации данной библиотеки - [React Redux на React.Hooks+React.Сontext](https://medium.com/@vadim_budarin/redux-на-react-hooks-react-сontext-ad673192309b).
+
 ## Зачем ?
 
 React-redux версии 7.x не работает корректно в Concurrent Mode React по причине того, что она хранит состояние не в контексте изменений React.
@@ -59,7 +61,7 @@ export const StoreProvider = createProvider(StateContext, DispatchContext);
 middlewares.js
 
 ```javascript
-const loggerMiddleware = () => (next) => (action) => {
+const loggerMiddleware = (store) => (next) => (action) => {
     console.log('action', action);
     return next(action);
 };
