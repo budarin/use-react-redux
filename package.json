@@ -30,7 +30,7 @@
         "build": "rollup -c",
         "start": "rollup -c -w",
         "prepublish": "run-s build",
-        "publish": "npm publish --access public",
+        "publish:it": "npm publish --access public",
         "test": "echo \"no test specified\" && exit 0",
         "test_": "run-s test:unit test:lint test:build",
         "test:build": "run-s build",
