@@ -50,7 +50,7 @@ const a = useContextSelection((state) => state.a);
 
 store.js
 
-```javascript
+```jsx
 import { createContext, createUseStore, createProvider } from '@budarin/use-react-redux';
 
 export const StateContext = createContext({});
@@ -107,8 +107,8 @@ const reducer = (state = initialState, action) => {
 };
 
 const actionCreators = {
-    increment: () => ({ type: 'INCREMENT' });
-    decrement: () => ({ type: 'DECREMENT' });
+    increment: () => ({ type: 'INCREMENT' }),
+    decrement: () => ({ type: 'DECREMENT' })
 };
 
 const selector = state => state;
