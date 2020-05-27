@@ -10,7 +10,7 @@ npm install --save @budarin/use-react-redux
 
 Высокопроизводительная библиотека управления состоянием приложения, базирующийся на React.Context и React.Hooks.
 
-Статья с описанием о реализации данной библиотеки - [React Redux на React.Hooks+React.Сontext](https://medium.com/@vadim_budarin/redux-на-react-hooks-react-сontext-ad673192309b).
+Статья с описанием реализации данной библиотеки - [React Redux на React.Hooks+React.Сontext](https://medium.com/@vadim_budarin/redux-на-react-hooks-react-сontext-ad673192309b).
 
 ## Зачем ?
 
