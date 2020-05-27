@@ -3,7 +3,8 @@ interface IHash<T> {
 }
 
 interface Action {
-    type: any;
+    type: string;
+    [key: string]: unknown;
 }
 
 interface Dispatch<S> {
@@ -22,8 +23,8 @@ interface Middleware {
 }
 
 interface StoreProvider {
-    reducer: Reducer<any>;
-    initialState: IHash<any>;
+    reducer: Reducer<unknown>;
+    initialState: IHash<unknown>;
     middlewares: Array<Middleware>;
     children: React.ReactNode;
 }
