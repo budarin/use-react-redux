@@ -6,7 +6,7 @@
 npm install --save @budarin/use-react-redux
 ```
 
-## Что ?
+## Что это ?
 
 Высокопроизводительная библиотека управления состоянием приложения, базирующийся на React.Context и React.Hooks.
 
