@@ -35,7 +35,7 @@ const state = {
     c: 'B value',
 };
 
-// теперь в компоненте А можyj слушать только изменени `a` в state
+// теперь в компоненте А можно слушать только изменени `a` в state
 const a = useContextSelection((state) => state.a);
 ```
 
