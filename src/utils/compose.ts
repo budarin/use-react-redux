@@ -1,7 +1,8 @@
-const compose = (...fns: Middleware[]): unknown =>
+// @ts-nocheck
+const compose = (...fns) =>
     fns.reduceRight(
         (prevFn, nextFn) => (...args) => nextFn(prevFn(...args)),
-        (value: unknown) => value,
+        (value) => value,
     );
 
 export default compose;

@@ -70,10 +70,10 @@ export const createUseStore = (
     containerProps: React.ClassAttributes<unknown> = emptyObject,
 ) => {
     const dispatch = useContext<Dispatch<Action>>(DispatchContext);
-    const dispatchProps = useMemo(getDispatchedProps(actions, dispatch), [dispatch, actions]);
+    const dispatchProps = useMemo(getDispatchedProps(actions, containerProps, dispatch), [dispatch, actions]);
     const stateProps = useContextSelection(StateContext, (state: unknown) => selector(state, containerProps));
 
-    return useMemo(
+    return useMemo<React.ClassAttributes<unknown>>(
         () => ({
             ...containerProps,
             ...stateProps,

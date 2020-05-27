@@ -1,38 +1,21 @@
-const getDispatchedProps = (actions: IHash<(...args: any[]) => Action>, dispatch: Dispatch<Action>) => () => {
-    // if (typeof mapDispatchToProps === 'function') {
-    //   return mapDispatchToProps(dispatch);
-    // }
+// eslint-disable-next-line no-unused-vars
+import { bindActionCreators, ActionCreator, ActionCreatorsMapObject } from 'redux';
+// eslint-disable-next-line no-unused-vars
+import { ClassAttributes } from 'react';
 
-    const dispatchPropsKeys = Object.keys(actions);
-    const len = dispatchPropsKeys.length;
-    const res = Object.create(null);
+type ActionCreatorFunc = (args: unknown, dispatch: Dispatch<Action>) => IHash<ActionCreator<Action>>;
 
-    const dispatchFunc = (key: string) => (...anyProps: React.Props<unknown>[]): void | Action => {
-        const action = actions[key](...anyProps);
-
-        if (action && 'type' in action) {
-            return dispatch(action) || action;
-        }
-
-        return action;
-    };
-
-    if (len > 0) {
-        for (let i = 0; i < len; i++) {
-            const key = dispatchPropsKeys[i];
-
-            // @ts-ignore
-            if (typeof actions[key] !== 'function') {
-                console.warn(`${key} in actions must be a function!`);
-
-                continue;
-            }
-
-            res[key] = dispatchFunc(key);
-        }
+const getDispatchedProps = (
+    actions: ActionCreatorFunc | IHash<ActionCreator<Action>>,
+    ownProps: ClassAttributes<unknown>,
+    dispatch: Dispatch<Action>,
+) => (): ActionCreatorsMapObject<unknown> => {
+    if (typeof actions === 'function') {
+        return actions(ownProps, dispatch);
     }
 
-    return res;
+    // @ts-ignore
+    return bindActionCreators(actions, dispatch);
 };
 
 export default getDispatchedProps;

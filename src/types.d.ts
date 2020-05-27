@@ -7,10 +7,15 @@ interface Action {
 }
 
 interface Dispatch<S> {
-    <A extends Action>(action: A): any;
+    <A extends Action>(action: A): unknown;
 }
 
 type Reducer<S> = <A extends Action>(state: S, action: A) => S;
+
+interface MiddlewareAPI<S> {
+    dispatch: Dispatch<S>;
+    getState(): S;
+}
 
 interface Middleware {
     <Action>(api: MiddlewareAPI<Action>): (next: Dispatch<Action>) => Dispatch<Action>;
