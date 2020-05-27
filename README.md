@@ -3,12 +3,6 @@
 ## Инсталяция
 
 ```bash
-yarn add @budarin/use-react-redux
-```
-
-или
-
-```bash
 npm install --save @budarin/use-react-redux
 ```
 
