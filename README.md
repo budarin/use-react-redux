@@ -56,8 +56,8 @@ import { createContext, createUseStore, createProvider } from '@budarin/use-reac
 export const StateContext = createContext({});
 export const DispatchContext = createContext({});
 
-export const useAppStore = createUseStore({ StateContext, DispatchContext });
-export const StoreProvider = createProvider({ StateContext, DispatchContext });
+export const useAppStore = createUseStore(StateContext, DispatchContext);
+export const StoreProvider = createProvider(StateContext, DispatchContext);
 ```
 
 опишем наш логирующий middleware
@@ -67,7 +67,6 @@ middlewares.js
 ```javascript
 const loggerMiddleware = () => (next) => (action) => {
     console.log('action', action);
-
     return next(action);
 };
 
@@ -88,7 +87,9 @@ const Counter = ({ counter, actions }) => {
             <p>
                 Clicked: {counter} times
                 {'  '}
-                <button onClick={actions.increment}>+</button> <button onClick={actions.ecrement}>-</button>
+                <button onClick={actions.increment}>+</button>
+                {'  '}
+                <button onClick={actions.decrement}>-</button>
             </p>
         </div>
     );
@@ -115,12 +116,15 @@ const selector = state => state;
 
 const CounterContainer = (ownPropsd) => {
     const containerProps = useAppStore(selector, actionCreators, ownProps);
-
     return useMemo(() => <Counter {...containerProps} />, [containerProps]);
 };
 
 export default const App = () => (
-    <StoreProvider reducer={reducer} initialState middlewares={appMiddlewares}>
+    <StoreProvider
+        reducer={reducer}
+        initialState={initialState}
+        middlewares={appMiddlewares}
+    >
         <CounterContainer />
     </StoreProvider>
 );
