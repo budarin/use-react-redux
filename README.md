@@ -8,7 +8,7 @@ npm install --save @budarin/use-react-redux
 
 ## Что это ?
 
-Высокопроизводительная библиотека управления состоянием приложения, базирующийся на React.Context и React.Hooks.
+Высокопроизводительная библиотека управления состоянием приложения, реализованная на React.Context и React.Hooks.
 
 Статья с описанием реализации данной библиотеки - [React Redux на React.Hooks+React.Сontext](https://medium.com/@vadim_budarin/redux-на-react-hooks-react-сontext-ad673192309b).
 
@@ -29,28 +29,25 @@ React-redux версии 7.x не работает корректно в Concurr
 Данный функционал контекста с подписками реализован в пакете [use-context-selector](https://www.npmjs.com/package/use-context-selector).
 
 ```javascript
-// Let's suppose this is the current state of your Context data
 const state = {
     a: 'A value',
     b: 'B value',
     c: 'B value',
 };
 
-// Then, in component `A` you can select (and listen) only `a` value
+// теперь в компоненте А можyj слушать только изменени `a` в state
 const a = useContextSelection((state) => state.a);
 ```
 
-Читайте подробности [use-context-selector](https://www.npmjs.com/package/use-context-selector)
-
 ## Как использовать
 
-store.js
+app-store.js
 
 ```jsx
 import { createContext, createUseStore, createProvider } from '@budarin/use-react-redux';
 
-export const StateContext = createContext({});
-export const DispatchContext = createContext({});
+const StateContext = createContext({});
+const DispatchContext = createContext({});
 
 export const useAppStore = createUseStore(StateContext, DispatchContext);
 export const StoreProvider = createProvider(StateContext, DispatchContext);
@@ -75,7 +72,7 @@ app.js
 
 ```javascript
 import appMiddlewares from './middlewares';
-import { StoreProvider, useAppStore } from './store';
+import { StoreProvider, useAppStore } from './app-store';
 
 const Counter = ({ counter, actions }) => {
     return (
@@ -109,10 +106,12 @@ const actionCreators = {
 };
 
 const selector = state => state;
-
 const CounterContainer = memo((ownPropsd) => {
     const containerProps = useAppStore(selector, actionCreators, ownProps);
-    return useMemo(() => <Counter {...containerProps} />, [containerProps]);
+
+    return useMemo(
+        () => <Counter {...containerProps} />, [containerProps]
+    );
 });
 
 export default const App = () => (
@@ -128,7 +127,9 @@ export default const App = () => (
 
 Вот и все!
 
-Размер подключаемого минифицированного кода около 3кб и [1.5кб](https://bundlephobia.com/result?p=@budarin/use-react-redux) в сжатом виде. Библиотека полностью консистентна в Concurent Mode и даже более производительна чем react-redux ! :)
+Размер подключаемого минифицированного кода около 3кб и [1.5кб](https://bundlephobia.com/result?p=@budarin/use-react-redux) в сжатом виде.
+
+Библиотека полностью консистентна в Concurent Mode и даже более производительна чем react-redux ! :)
 
 При разработке приложения нужно лишь уделять внимание мемоизации результатов рендера контейнера.
 
