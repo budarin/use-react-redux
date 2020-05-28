@@ -26,7 +26,7 @@ React-redux версии 7.x не работает корректно в Concurr
 
 Благодаря React.Hooks под капотом производится вызов рендера только тех компонент, которые были подписаны на те изменения, которые произошли в контексте.
 
-Данный функционал контекста с подписками реализован в пакете [use-context-selector](https://www.npmjs.com/package/use-context-selector).
+Данный функционал контекста с подписками реализован в пакете [use-context-selection](https://www.npmjs.com/package/use-context-selection).
 
 ```javascript
 const state = {
@@ -127,7 +127,7 @@ export default const App = () => (
 
 Вот и все!
 
-Размер подключаемого минифицированного кода около 3кб и [1.5кб](https://bundlephobia.com/result?p=@budarin/use-react-redux) в сжатом виде.
+Размер подключаемого минифицированного кода около 3 кб и [1.5 кб](https://bundlephobia.com/result?p=@budarin/use-react-redux) в сжатом виде.
 
 Библиотека полностью консистентна в Concurent Mode и даже более производительна чем react-redux ! :)
 
