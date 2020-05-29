@@ -154,6 +154,8 @@ export default const App = () => (
 ### batch
 
 Под капотом используется unstable_batchedUpdates() API - группирует несколько обновлений в React и отрисовывает за один раз.
+В контексте исполнения React - ее бесполезно использовать - React сам под капотом оптимизирует множественные последовательные изменения состояния, объединяя их в одно.
+В основном данная функция должна использоваться когда состоянием управляют вне контекста React (websockets и тому подобное).
 
 | Param    | Type | Description                                                            | Optional / Required |
 | -------- | ---- | ---------------------------------------------------------------------- | ------------------- |
@@ -167,21 +169,23 @@ import { useAppStore, StoreProvider } from './app-store';
 import { batch } from '@budarin/use-react-redux';
 import appMiddlewares from './middlewares';
 
-const Counter = ({ counter, actions }) => {
-    const batchedIncrement = () => {
+window.setTimeout(
+    () =>
         batch(() => {
-            actions.increment();
-            actions.decrement();
-            actions.increment();
-        });
-    };
+            dispatch(actionCreators.increment());
+            dispatch(actionCreators.deccrement());
+            dispatch(actionCreators.increment());
+        }),
+    3000,
+);
 
+const Counter = ({ counter, actions }) => {
     return (
         <div>
             <p>
                 Clicked: {counter} times
                 {'  '}
-                <button onClick={batchedIncrement}>+</button>
+                <button onClick={actions.increment}>+</button>
                 {'  '}
                 <button onClick={actions.decrement}>-</button>
             </p>
