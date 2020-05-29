@@ -48,8 +48,9 @@ import { createContext, createStoreAccessors } from '@budarin/use-react-redux';
 
 const StateContext = createContext();
 const DispatchContext = createContext();
+const storage = createStorage(StateContext, DispatchContext);
 
-export default const { useStore, StoreProvider } = createStorage(StateContext, DispatchContext);
+export default storage;
 ```
 
 опишем наш логирующий middleware
@@ -70,8 +71,10 @@ export default const appMiddlewares = [loggerMiddleware];
 app.js
 
 ```javascript
-import { useStore, StoreProvider } from './app-store';
+import storage from './app-store';
 import appMiddlewares from './middlewares';
+
+const { useStore, StoreProvider } = storage;
 
 const Counter = ({ counter, actions }) => (
     <div>
@@ -141,6 +144,8 @@ export default const App = () => (
 -   [batch](#batch)
 -   [createContext](#createContext)
 -   [createStorage](#createStorage)
+-   [createUseStore](#createUseStore)
+-   [createProvider](#createProvider)
 <!-- /TOC -->
 
 Генерируемые хуки и компоненты:
@@ -229,7 +234,29 @@ const Counter = ({ counter, actions }) => {
 | StateContext    | React.Context | Context, хранящий состояние      | Required            |
 | DispatchContext | React.Context | Context, хранящий метод dispatch | Required            |
 
--   **Возвращаемое значение**: { useStore, StoreProvider }
+-   **Возвращаемое значение**: объект { useStore, StoreProvider }
+
+### createUseStore
+
+Метод, создающий хук `useStore` для, указанных при его создании, пары контестов.
+
+| Param           | Type          | Description                      | Optional / Required |
+| --------------- | ------------- | -------------------------------- | ------------------- |
+| StateContext    | React.Context | Context, хранящий состояние      | Required            |
+| DispatchContext | React.Context | Context, хранящий метод dispatch | Required            |
+
+-   **Возвращаемое значение**: хук useStore
+
+### createProvider
+
+Метод, создающий компонент `StoreProvider` для, указанных при его создании, пары контестов.
+
+| Param           | Type          | Description                      | Optional / Required |
+| --------------- | ------------- | -------------------------------- | ------------------- |
+| StateContext    | React.Context | Context, хранящий состояние      | Required            |
+| DispatchContext | React.Context | Context, хранящий метод dispatch | Required            |
+
+-   **Возвращаемое значение**: компонент StoreProvider
 
 ### useStore
 
