@@ -80,6 +80,7 @@ export const createUseStore = (
             ...containerProps,
             ...stateProps,
             actions: dispatchProps,
+            dispatch,
         }),
         [containerProps, stateProps, dispatchProps],
     );
