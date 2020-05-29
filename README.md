@@ -44,13 +44,12 @@ const a = useContextSelection((state) => state.a);
 app-store.js
 
 ```jsx
-import { createContext, createUseStore, createProvider } from '@budarin/use-react-redux';
+import { createContext, createStoreAccessors } from '@budarin/use-react-redux';
 
-const StateContext = createContext({});
-const DispatchContext = createContext({});
+const StateContext = createContext();
+const DispatchContext = createContext();
 
-export const useAppStore = createUseStore(StateContext, DispatchContext);
-export const StoreProvider = createProvider(StateContext, DispatchContext);
+export default const { useAppStore, StoreProvider } = createStoreAccessors(StateContext, DispatchContext);
 ```
 
 опишем наш логирующий middleware
@@ -71,22 +70,20 @@ export default const appMiddlewares = [loggerMiddleware];
 app.js
 
 ```javascript
+import { useAppStore, StoreProvider } from './app-store';
 import appMiddlewares from './middlewares';
-import { StoreProvider, useAppStore } from './app-store';
 
-const Counter = ({ counter, actions }) => {
-    return (
-        <div>
-            <p>
-                Clicked: {counter} times
-                {'  '}
-                <button onClick={actions.increment}>+</button>
-                {'  '}
-                <button onClick={actions.decrement}>-</button>
-            </p>
-        </div>
-    );
-};
+const Counter = ({ counter, actions }) => (
+    <div>
+        <p>
+            Clicked: {counter} times
+            {'  '}
+            <button onClick={actions.increment}>+</button>
+            {'  '}
+            <button onClick={actions.decrement}>-</button>
+        </p>
+    </div>
+);
 
 const initialState = { counter: 0 };
 const reducer = (state = initialState, action) => {
@@ -134,3 +131,67 @@ export default const App = () => (
 При разработке приложения нужно лишь уделять внимание мемоизации результатов рендера контейнера.
 
 Приятной вам разработки! 😊
+
+## API
+
+### createContext
+
+Creates a smart `Context` object which compares changes on your Context state and dispatches changes to subscribers.
+
+| Param      | Type     | Description                                                                              | Optional / Required |
+| ---------- | -------- | ---------------------------------------------------------------------------------------- | ------------------- |
+| initValue  | any      | Initial value for the Context                                                            | Required            |
+| equalityFn | Function | Function used to compare old vs new state; by default it performs shallow equality check | Optional            |
+
+-   **Return Value**: Context
+
+### isEqualShallow
+
+This is the default comparator function used internally if `equalityFn` param is not provided to `createContext`.
+
+This function is exported as part of the library in case you need it as foundations for your own equality check function.
+
+You need to remember two things about this default equality function:
+
+-   As the name already implies, it performs a **shallow** equality check for performance reassons;
+-   It will ignore comparing `functions`; this comes handy as you'd probably include in your store functions to mutate the current state; this way there is no need to memoize the functions (e.g. using `React.useCallback`).
+
+| Param    | Type | Description               | Optional / Required |
+| -------- | ---- | ------------------------- | ------------------- |
+| newState | any  | New state to compare with | Required            |
+| oldState | any  | Old state to compare with | Required            |
+
+-   **Return Value**: boolean; whether both states are considered the same or not.
+
+### batch
+
+Для примера выполним увеличение счетчика в 3 шага: инкремент декримент и снова инкремент счетчика.
+В результате вызова всех трех изменений состояния приложения в методе `batch` - произойдет не три рендера, а один.
+
+```javascript
+import { useAppStore, StoreProvider } from './app-store';
+import { batch } from '@budarin/use-react-redux';
+import appMiddlewares from './middlewares';
+
+const Counter = ({ counter, actions }) => {
+    const batchedIncrement = () => {
+        batch(() => {
+            actions.increment();
+            actions.decrement();
+            actions.increment();
+        });
+    };
+
+    return (
+        <div>
+            <p>
+                Clicked: {counter} times
+                {'  '}
+                <button onClick={batchedIncrement}>+</button>
+                {'  '}
+                <button onClick={actions.decrement}>-</button>
+            </p>
+        </div>
+    );
+};
+```

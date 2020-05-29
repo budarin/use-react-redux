@@ -1,20 +1,21 @@
 import React, { memo, useMemo, useContext, useLayoutEffect, useEffect, useRef } from 'react';
 import { useContextSelection } from 'use-context-selection';
-import { unstable_batchedUpdates as batch } from 'react-dom';
+// eslint-disable-next-line camelcase
+import ReactDOM from 'react-dom';
 
 import getDispatchedProps from './utils/getDispatchedProps';
-import { setBatch } from './utils/batch';
+import { setBatch, getBatch } from './utils/batch';
 import compose from './utils/compose';
 
 export { createContext } from 'use-context-selection';
-export { getBatch } from './utils/batch';
+export const batch = getBatch();
 
 const emptyObject = {};
 const emptyMiddlewaresArray: Array<Middleware> = [];
 const emptySelector = (x: unknown, _: React.ClassAttributes<unknown>) => x;
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
-setBatch(batch);
+setBatch(ReactDOM.unstable_batchedUpdates);
 
 const useStore = (reducer: Reducer<unknown>, initState = emptyObject, middlewares = emptyMiddlewaresArray) => {
     const [state, dispatch] = React.useReducer(reducer, initState);
