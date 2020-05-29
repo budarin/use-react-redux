@@ -134,34 +134,11 @@ export default const App = () => (
 
 ## API
 
-### createContext
+Библиотека эксортирует методы:
 
-Creates a smart `Context` object which compares changes on your Context state and dispatches changes to subscribers.
-
-| Param      | Type     | Description                                                                              | Optional / Required |
-| ---------- | -------- | ---------------------------------------------------------------------------------------- | ------------------- |
-| initValue  | any      | Initial value for the Context                                                            | Required            |
-| equalityFn | Function | Function used to compare old vs new state; by default it performs shallow equality check | Optional            |
-
--   **Return Value**: Context
-
-### isEqualShallow
-
-This is the default comparator function used internally if `equalityFn` param is not provided to `createContext`.
-
-This function is exported as part of the library in case you need it as foundations for your own equality check function.
-
-You need to remember two things about this default equality function:
-
--   As the name already implies, it performs a **shallow** equality check for performance reassons;
--   It will ignore comparing `functions`; this comes handy as you'd probably include in your store functions to mutate the current state; this way there is no need to memoize the functions (e.g. using `React.useCallback`).
-
-| Param    | Type | Description               | Optional / Required |
-| -------- | ---- | ------------------------- | ------------------- |
-| newState | any  | New state to compare with | Required            |
-| oldState | any  | Old state to compare with | Required            |
-
--   **Return Value**: boolean; whether both states are considered the same or not.
+-   [batch](#batch)
+-   [createContext](#createContext)
+-   [createStoreAccessors](#createStoreAccessors)
 
 ### batch
 
@@ -195,3 +172,32 @@ const Counter = ({ counter, actions }) => {
     );
 };
 ```
+
+### createContext
+
+Creates a smart `Context` object which compares changes on your Context state and dispatches changes to subscribers.
+
+| Param      | Type     | Description                                                                              | Optional / Required |
+| ---------- | -------- | ---------------------------------------------------------------------------------------- | ------------------- |
+| initValue  | any      | Initial value for the Context                                                            | Required            |
+| equalityFn | Function | Function used to compare old vs new state; by default it performs shallow equality check | Optional            |
+
+-   **Return Value**: Context
+
+### isEqualShallow
+
+This is the default comparator function used internally if `equalityFn` param is not provided to `createContext`.
+
+This function is exported as part of the library in case you need it as foundations for your own equality check function.
+
+You need to remember two things about this default equality function:
+
+-   As the name already implies, it performs a **shallow** equality check for performance reassons;
+-   It will ignore comparing `functions`; this comes handy as you'd probably include in your store functions to mutate the current state; this way there is no need to memoize the functions (e.g. using `React.useCallback`).
+
+| Param    | Type | Description               | Optional / Required |
+| -------- | ---- | ------------------------- | ------------------- |
+| newState | any  | New state to compare with | Required            |
+| oldState | any  | Old state to compare with | Required            |
+
+-   **Return Value**: boolean; whether both states are considered the same or not.
