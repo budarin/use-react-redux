@@ -49,7 +49,7 @@ import { createContext, createStoreAccessors } from '@budarin/use-react-redux';
 const StateContext = createContext();
 const DispatchContext = createContext();
 
-export default const { useAppStore, StoreProvider } = createStoreAccessors(StateContext, DispatchContext);
+export default const { useStore, StoreProvider } = createStoreAccessors(StateContext, DispatchContext);
 ```
 
 опишем наш логирующий middleware
@@ -70,7 +70,7 @@ export default const appMiddlewares = [loggerMiddleware];
 app.js
 
 ```javascript
-import { useAppStore, StoreProvider } from './app-store';
+import { useStore, StoreProvider } from './app-store';
 import appMiddlewares from './middlewares';
 
 const Counter = ({ counter, actions }) => (
@@ -104,7 +104,7 @@ const actionCreators = {
 
 const selector = state => state;
 const CounterContainer = memo((ownPropsd) => {
-    const containerProps = useAppStore(selector, actionCreators, ownProps);
+    const containerProps = useStore(selector, actionCreators, ownProps);
 
     return useMemo(
         () => <Counter {...containerProps} />, [containerProps]
@@ -134,19 +134,18 @@ export default const App = () => (
 
 ## API
 
-Библиотека эксортирует методы:
-
 -   [batch](#batch)
 -   [createContext](#createContext)
 -   [createStoreAccessors](#createStoreAccessors)
+-   [useStore](#useStore)
 
 ### batch
 
 React's unstable_batchedUpdates() API allows any React updates in an event loop tick to be batched together into a single render pass. React already uses this internally for its own event handler callbacks. This API is actually part of the renderer packages like ReactDOM and React Native, not the React core itself.
 
-| Param      | Type     | Description                                                                              | Optional / Required |
-| ---------- | -------- | ---------------------------------------------------------------------------------------- | ------------------- |
-| callback  | void      | Callback, в котором вызываются методы, изменяющие состояние приложения при помощи dispatch | Required            |
+| Param    | Type | Description                                                                                | Optional / Required |
+| -------- | ---- | ------------------------------------------------------------------------------------------ | ------------------- |
+| callback | void | Callback, в котором вызываются методы, изменяющие состояние приложения при помощи dispatch | Required            |
 
 Для примера выполним увеличение счетчика в 3 шага: инкремент декримент и снова инкремент счетчика.
 В результате вызова всех трех изменений состояния приложения в методе `batch` - произойдет не три рендера, а один.
@@ -207,3 +206,20 @@ You need to remember two things about this default equality function:
 | oldState | any  | Old state to compare with | Required            |
 
 -   **Return Value**: boolean; whether both states are considered the same or not.
+
+### createStoreAccessors
+
+| Param           | Type          | Description                                                                              | Optional / Required |
+| --------------- | ------------- | ---------------------------------------------------------------------------------------- | ------------------- |
+| StateContext    | React.Context | Initial value for the Context                                                            | Required            |
+| DispatchContext | React.Context | Function used to compare old vs new state; by default it performs shallow equality check | Required            |
+
+-   **Return Value**: { useStore, StoreProvider }
+
+### useStore
+
+| Param          | Type          | Description                   | Optional / Required |
+| -------------- | ------------- | ----------------------------- | ------------------- |
+| selector       | React.Context | Initial value for the Context | Required            |
+| actionCreators | React.Context | Initial value for the Context | Required            |
+| ownProps       | React.Context | Initial value for the Context | Required            |
