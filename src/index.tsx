@@ -7,6 +7,7 @@ import { setBatch } from './utils/batch';
 import compose from './utils/compose';
 
 export { createContext } from 'use-context-selection';
+export { getBatch } from './utils/batch';
 
 const emptyObject = {};
 const emptyMiddlewaresArray: Array<Middleware> = [];
