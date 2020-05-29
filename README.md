@@ -134,10 +134,13 @@ export default const App = () => (
 
 ## API
 
+<!-- TOC -->
+
 -   [batch](#batch)
 -   [createContext](#createContext)
 -   [createStoreAccessors](#createStoreAccessors)
 -   [useStore](#useStore)
+<!-- /TOC -->
 
 ### batch
 
