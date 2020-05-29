@@ -1,0 +1,19 @@
+.app {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.viewport {
+  height: calc(100% - 64px);
+  overflow: auto;
+}
+h1 {
+  background-color: aqua;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  line-height: 2;
+}
+
+li {
+  contain: layout;
+}

@@ -1,6 +1,6 @@
 {
     "name": "@budarin/use-react-redux",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "description": "React-redux based on React Context and React Hooks.",
     "keywords": [
         "react",
