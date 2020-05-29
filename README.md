@@ -142,6 +142,12 @@ export default const App = () => (
 
 ### batch
 
+React's unstable_batchedUpdates() API allows any React updates in an event loop tick to be batched together into a single render pass. React already uses this internally for its own event handler callbacks. This API is actually part of the renderer packages like ReactDOM and React Native, not the React core itself.
+
+| Param      | Type     | Description                                                                              | Optional / Required |
+| ---------- | -------- | ---------------------------------------------------------------------------------------- | ------------------- |
+| callback  | void      | Callback, в котором вызываются методы, изменяющие состояние приложения при помощи dispatch | Required            |
+
 Для примера выполним увеличение счетчика в 3 шага: инкремент декримент и снова инкремент счетчика.
 В результате вызова всех трех изменений состояния приложения в методе `batch` - произойдет не три рендера, а один.
 
