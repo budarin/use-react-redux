@@ -83,3 +83,11 @@ export const createUseStore = (
         [containerProps, stateProps, dispatchProps],
     );
 };
+
+export const createStoreAccessors = (
+    StateContext: React.Context<unknown>,
+    DispatchContext: React.Context<Dispatch<Action>>,
+) => ({
+    useAppStore: createUseStore(StateContext, DispatchContext),
+    StoreProvider: createProvider(StateContext, DispatchContext),
+});

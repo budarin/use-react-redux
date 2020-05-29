@@ -1,7 +1,7 @@
 // Default to a dummy "batch" implementation that just runs the callback
 
 // In Blocking Mode and Concurrent Mode, all setStates are batched by default
-function defaultNoopBatch(callback: () => any): void {
+function defaultNoopBatch(callback: () => void): void {
     callback();
 }
 
