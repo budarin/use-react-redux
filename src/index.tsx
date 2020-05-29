@@ -85,7 +85,7 @@ export const createUseStore = (
     );
 };
 
-export const createStoreAccessors = (
+export const createStorage = (
     StateContext: React.Context<unknown>,
     DispatchContext: React.Context<Dispatch<Action>>,
 ) => ({

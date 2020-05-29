@@ -49,7 +49,7 @@ import { createContext, createStoreAccessors } from '@budarin/use-react-redux';
 const StateContext = createContext();
 const DispatchContext = createContext();
 
-export default const { useStore, StoreProvider } = createStoreAccessors(StateContext, DispatchContext);
+export default const { useStore, StoreProvider } = createStorage(StateContext, DispatchContext);
 ```
 
 опишем наш логирующий middleware
@@ -134,21 +134,30 @@ export default const App = () => (
 
 ## API
 
+Экспортируемые методы:
+
 <!-- TOC -->
 
 -   [batch](#batch)
 -   [createContext](#createContext)
--   [createStoreAccessors](#createStoreAccessors)
+-   [createStorage](#createStorage)
+<!-- /TOC -->
+
+Генерируемые хуки и компоненты:
+
+<!-- TOC -->
+
 -   [useStore](#useStore)
+-   [StoreProvider](#StoreProvider)
 <!-- /TOC -->
 
 ### batch
 
-React's unstable_batchedUpdates() API allows any React updates in an event loop tick to be batched together into a single render pass. React already uses this internally for its own event handler callbacks. This API is actually part of the renderer packages like ReactDOM and React Native, not the React core itself.
+Под капотом используется unstable_batchedUpdates() API - группирует несколько обновлений в React и отрисовывает за один раз.
 
-| Param    | Type | Description                                                                                | Optional / Required |
-| -------- | ---- | ------------------------------------------------------------------------------------------ | ------------------- |
-| callback | void | Callback, в котором вызываются методы, изменяющие состояние приложения при помощи dispatch | Required            |
+| Param    | Type | Description                                                            | Optional / Required |
+| -------- | ---- | ---------------------------------------------------------------------- | ------------------- |
+| callback | void | Callback, в котором вызываются методы, изменяющие состояние приложения | Required            |
 
 Для примера выполним увеличение счетчика в 3 шага: инкремент декримент и снова инкремент счетчика.
 В результате вызова всех трех изменений состояния приложения в методе `batch` - произойдет не три рендера, а один.
@@ -183,46 +192,56 @@ const Counter = ({ counter, actions }) => {
 
 ### createContext
 
-Creates a smart `Context` object which compares changes on your Context state and dispatches changes to subscribers.
+Создает "умный" `Context` который сравнивает изменения предыдущего состояния с новым при помощи `equalityFn` и если обнаружено не совпадение - отправляет изменения подписчикам
 
-| Param      | Type     | Description                                                                              | Optional / Required |
-| ---------- | -------- | ---------------------------------------------------------------------------------------- | ------------------- |
-| initValue  | any      | Initial value for the Context                                                            | Required            |
-| equalityFn | Function | Function used to compare old vs new state; by default it performs shallow equality check | Optional            |
+| Param      | Type     | Description                                                                                                          | Optional / Required |
+| ---------- | -------- | -------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| initValue  | any      | Начальное состояние Context                                                                                          | Required            |
+| equalityFn | Function | Функция, которая используется для сравнения предыдущего и нового состояния. по-умолчанию используется isEqualShallow | Optional            |
 
--   **Return Value**: Context
+-   **Возвращаемое значение**: Context
 
 ### isEqualShallow
 
-This is the default comparator function used internally if `equalityFn` param is not provided to `createContext`.
+Фунция по-умолчанию для сравнения состояний контекста когда в `createContext` не указана `equalityFn`.
+Вы должны понимать 2 вещи относительно этой функции:
 
-This function is exported as part of the library in case you need it as foundations for your own equality check function.
+-   она делает не глубокую проверку равенства для высокой производительности;
+-   она не сравнивает свойства-функции в объектах таким образом нет необходимости использовать `React.useCallback` для проброса функций внутрь объекта для того, чтобы функция не вызывала срабатывание.
 
-You need to remember two things about this default equality function:
+| Param    | Type | Description          | Optional / Required |
+| -------- | ---- | -------------------- | ------------------- |
+| newState | any  | Новое состояние      | Required            |
+| oldState | any  | Предыдущее состояние | Required            |
 
--   As the name already implies, it performs a **shallow** equality check for performance reassons;
--   It will ignore comparing `functions`; this comes handy as you'd probably include in your store functions to mutate the current state; this way there is no need to memoize the functions (e.g. using `React.useCallback`).
+-   **Возвращаемое значение**: boolean; true - если объекты идентичны и false - если они различны
 
-| Param    | Type | Description               | Optional / Required |
-| -------- | ---- | ------------------------- | ------------------- |
-| newState | any  | New state to compare with | Required            |
-| oldState | any  | Old state to compare with | Required            |
+### createStorage
 
--   **Return Value**: boolean; whether both states are considered the same or not.
+Функция, которая создает хук `useStore` и компонент `StoreProvider` для, указанных при его создании, пары контестов.
 
-### createStoreAccessors
+| Param           | Type          | Description                      | Optional / Required |
+| --------------- | ------------- | -------------------------------- | ------------------- |
+| StateContext    | React.Context | Context, хранящий состояние      | Required            |
+| DispatchContext | React.Context | Context, хранящий метод dispatch | Required            |
 
-| Param           | Type          | Description                                                                              | Optional / Required |
-| --------------- | ------------- | ---------------------------------------------------------------------------------------- | ------------------- |
-| StateContext    | React.Context | Initial value for the Context                                                            | Required            |
-| DispatchContext | React.Context | Function used to compare old vs new state; by default it performs shallow equality check | Required            |
-
--   **Return Value**: { useStore, StoreProvider }
+-   **Возвращаемое значение**: { useStore, StoreProvider }
 
 ### useStore
 
-| Param          | Type          | Description                   | Optional / Required |
-| -------------- | ------------- | ----------------------------- | ------------------- |
-| selector       | React.Context | Initial value for the Context | Required            |
-| actionCreators | React.Context | Initial value for the Context | Required            |
-| ownProps       | React.Context | Initial value for the Context | Required            |
+Хук, который подключает контейнер к состоянию приложения для, указанных при его создании, пары контестов.
+
+| Param          | Type          | Description                                                                             | Optional / Required |
+| -------------- | ------------- | --------------------------------------------------------------------------------------- | ------------------- |
+| selector       | React.Context | функция селектор, для выборки данных из состояния                                       | Required            |
+| actionCreators | React.Context | Объект из функций генераторов событий или функция, создающая объект генераторов событий | Required            |
+| ownProps       | React.Context | свойства, пробрасываемые контейнеру                                                     | Required            |
+
+-   **Возвращаемое значение**: props - результирующие свойства контейнера, полученные как объединение:
+    -   собственных свойств контейнера
+    -   свойств, полученных из состояния приложения
+    -   свойств, полученных из генераторов событий для отправки actions в stor при помощи dispatch
+
+### StoreProvider
+
+Компонент-провайдер для оборачивания приложения, с целью проброса Context внутрь дерева компонентов React
