@@ -138,23 +138,15 @@ export default const App = () => (
 ## API
 
 Экспортируемые методы:
-
-<!-- TOC -->
-
 -   [batch](#batch)
 -   [createContext](#createContext)
 -   [createStorage](#createStorage)
 -   [createUseStore](#createUseStore)
 -   [createProvider](#createProvider)
-<!-- /TOC -->
 
 Генерируемые хуки и компоненты:
-
-<!-- TOC -->
-
 -   [useStore](#useStore)
 -   [StoreProvider](#StoreProvider)
-<!-- /TOC -->
 
 ### batch
 
