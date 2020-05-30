@@ -60,7 +60,7 @@ export const createProvider = (StateContext: React.Context<any>, DispatchContext
 
 export const createUseStore = (StateContext: React.Context<any>, DispatchContext: React.Context<Dispatch<Action>>) => (
     selector = emptySelector,
-    actions: IHash<(...args: any[]) => Action> = emptyObject,
+    actions: IHash<(...args: any[]) => Dispatch<Action>> = emptyObject,
     containerProps: React.ClassAttributes<any> = emptyObject,
 ) => {
     const dispatch = useContext<Dispatch<Action>>(DispatchContext);

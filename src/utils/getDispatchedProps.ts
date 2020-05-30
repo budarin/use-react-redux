@@ -1,7 +1,15 @@
 const emptyObject: React.ClassAttributes<any> = {};
 
+interface ActionCreator {
+    (...args: any[]): Dispatch<Action>;
+}
+
+interface ActionCreators {
+    (props: any, dispatch: Dispatch<Action>): IHash<ActionCreator>;
+}
+
 const getDispatchedProps = (
-    mapDispatchToProps: Function | IHash<any>,
+    mapDispatchToProps: ActionCreators | IHash<ActionCreator>,
     dispatch: Dispatch<Action>,
     ownProps = emptyObject,
 ) => () => {
