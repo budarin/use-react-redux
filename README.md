@@ -188,6 +188,12 @@ window.setTimeout(
 
 -   **Возвращаемое значение**: Context
 
+#### Пример
+
+```jsx
+const StateContext = createContext();
+```
+
 ### isEqualShallow
 
 Фунция по-умолчанию для сравнения состояний контекста когда в `createContext` не указана `equalityFn`.
@@ -214,6 +220,12 @@ window.setTimeout(
 
 -   **Возвращаемое значение**: объект { useStore, StoreProvider }
 
+#### Пример
+
+```jsx
+const { useStore, StoreProvider } = createStorage(StateContext, DispatchContext);
+```
+
 ### createUseStore
 
 Метод, создающий хук `useStore` для, указанных при его создании, пары контестов.
@@ -225,6 +237,12 @@ window.setTimeout(
 
 -   **Возвращаемое значение**: хук useStore
 
+#### Пример
+
+```jsx
+const useStore = createUseStore(StateContext, DispatchContext);
+```
+
 ### createProvider
 
 Метод, создающий компонент `StoreProvider` для, указанных при его создании, пары контестов.
@@ -235,6 +253,12 @@ window.setTimeout(
 | DispatchContext | React.Context | Context, хранящий метод dispatch | Required            |
 
 -   **Возвращаемое значение**: компонент StoreProvider
+
+#### Пример
+
+```jsx
+const StoreProvider = createProvider(StateContext, DispatchContext);
+```
 
 ### useStore
 
@@ -251,6 +275,20 @@ window.setTimeout(
     -   свойств, полученных из состояния приложения
     -   свойств, полученных из генераторов событий для отправки actions в stor при помощи dispatch
 
+#### Пример
+
+```jsx
+const containerProps = useStore(selector, actionCreators, ownProps);
+```
+
 ### StoreProvider
 
 Компонент-провайдер для оборачивания приложения, с целью проброса Context внутрь дерева компонентов React
+
+#### Пример
+
+```jsx
+<StoreProvider reducer={reducer} initialState={initialState} middlewares={appMiddlewares}>
+    <CounterContainer />
+</StoreProvider>
+```
