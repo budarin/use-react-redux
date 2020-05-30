@@ -183,7 +183,7 @@ window.setTimeout(
 
 | Param      | Type     | Description                                                                                                          | Optional / Required |
 | ---------- | -------- | -------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| initValue  | any      | Начальное состояние Context                                                                                          | Required            |
+| initValue  | any      | Начальное состояние Context                                                                                          | Optional            |
 | equalityFn | Function | Функция, которая используется для сравнения предыдущего и нового состояния. по-умолчанию используется isEqualShallow | Optional            |
 
 -   **Возвращаемое значение**: Context
@@ -191,7 +191,7 @@ window.setTimeout(
 #### Пример
 
 ```jsx
-const StateContext = createContext();
+const StateContext = createContext({ counter: 0 }, myEqualityFunction);
 ```
 
 ### isEqualShallow
@@ -289,6 +289,6 @@ const containerProps = useStore(selector, actionCreators, ownProps);
 
 ```jsx
 <StoreProvider reducer={reducer} initialState={initialState} middlewares={appMiddlewares}>
-    <CounterContainer />
+    <App />
 </StoreProvider>
 ```
