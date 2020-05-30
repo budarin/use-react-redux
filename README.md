@@ -105,7 +105,7 @@ const actionCreators = {
     decrement: () => ({ type: 'DECREMENT' })
 };
 
-const selector = state => state;
+const selector = (state) => state;
 const CounterContainer = memo((ownPropsd) => {
     const containerProps = useStore(selector, actionCreators, ownProps);
 
@@ -127,7 +127,7 @@ export default const App = () => (
 
 Вот и все!
 
-Размер подключаемого минифицированного кода около 3 кб и [1.5 кб](https://bundlephobia.com/result?p=@budarin/use-react-redux) в сжатом виде.
+Размер подключаемого минифицированного кода около 3 кб и [1.6 кб](https://bundlephobia.com/result?p=@budarin/use-react-redux) в сжатом виде.
 
 Библиотека полностью консистентна в Concurent Mode и даже более производительна чем react-redux ! :)
 
