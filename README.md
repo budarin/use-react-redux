@@ -138,6 +138,7 @@ export default const App = () => (
 ## API
 
 Экспортируемые методы:
+
 -   [batch](#batch)
 -   [createContext](#createContext)
 -   [createStorage](#createStorage)
@@ -145,6 +146,7 @@ export default const App = () => (
 -   [createProvider](#createProvider)
 
 Генерируемые хуки и компоненты:
+
 -   [useStore](#useStore)
 -   [StoreProvider](#StoreProvider)
 
@@ -162,9 +164,7 @@ export default const App = () => (
 В результате вызова всех трех изменений состояния приложения в методе `batch` - произойдет не три рендера, а один.
 
 ```javascript
-import { useAppStore, StoreProvider } from './app-store';
 import { batch } from '@budarin/use-react-redux';
-import appMiddlewares from './middlewares';
 
 window.setTimeout(
     () =>
