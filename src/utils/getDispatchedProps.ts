@@ -1,7 +1,10 @@
-// @ts-nocheck
-const emptyObject = {};
+const emptyObject: React.ClassAttributes<any> = {};
 
-const getDispatchedProps = (mapDispatchToProps, dispatch, ownProps = emptyObject) => () => {
+const getDispatchedProps = (
+    mapDispatchToProps: Function | IHash<any>,
+    dispatch: Dispatch<Action>,
+    ownProps = emptyObject,
+) => () => {
     if (typeof mapDispatchToProps === 'function') {
         return mapDispatchToProps(ownProps, dispatch);
     }
@@ -10,7 +13,7 @@ const getDispatchedProps = (mapDispatchToProps, dispatch, ownProps = emptyObject
     const len = dispatchPropsKeys.length;
     const res = Object.create(null);
 
-    const dispatchFunc = (key) => (...anyProps) => {
+    const dispatchFunc = (key: string) => (...anyProps: any[]) => {
         const action = mapDispatchToProps[key](...anyProps);
 
         if (action && 'type' in action) {
@@ -27,6 +30,7 @@ const getDispatchedProps = (mapDispatchToProps, dispatch, ownProps = emptyObject
             // @ts-ignore
             if (typeof mapDispatchToProps[key] !== 'function') {
                 console.warn(`Action ${key} in mapDispatchToProps should be a function!`);
+
                 continue;
             }
 

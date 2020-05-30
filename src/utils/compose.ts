@@ -1,8 +1,7 @@
-// @ts-nocheck
-const compose = (...fns) =>
+const compose = (...fns: Function[]) =>
     fns.reduceRight(
-        (prevFn, nextFn) => (...args) => nextFn(prevFn(...args)),
-        (value) => value,
+        (prevFn, nextFn) => (...args: any) => nextFn(prevFn(...args)),
+        (value: any) => value,
     );
 
 export default compose;
