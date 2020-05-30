@@ -175,20 +175,6 @@ window.setTimeout(
         }),
     3000,
 );
-
-const Counter = ({ counter, actions }) => {
-    return (
-        <div>
-            <p>
-                Clicked: {counter} times
-                {'  '}
-                <button onClick={actions.increment}>+</button>
-                {'  '}
-                <button onClick={actions.decrement}>-</button>
-            </p>
-        </div>
-    );
-};
 ```
 
 ### createContext
