@@ -1,7 +1,7 @@
 const loggerMiddleware = (store) => (next) => (action) => {
-  console.log("action", store.getState(), action);
+    console.log('action', store.getState(), action);
 
-  return next(action);
+    return next(action);
 };
 
 const appMiddlewares = [loggerMiddleware];

@@ -112,13 +112,11 @@ const actionCreators = {
 };
 
 const selector = (state) => state;
-const CounterContainer = memo((ownPropsd) => {
+const CounterContainer = (ownPropsd) => {
     const containerProps = useStore(selector, actionCreators, ownProps);
 
-    return useMemo(
-        () => <Counter {...containerProps} />, [containerProps]
-    );
-});
+    return <Counter {...containerProps} />;
+};
 
 export default const App = () => (
     <StoreProvider
