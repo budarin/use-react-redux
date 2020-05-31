@@ -43,7 +43,7 @@ const a = useContextSelection((state) => state.a);
 
 Ниже представлен результат профилировки добавления узла в дерево - подтверждает переисовку только модифицированного узла:
 
-![](./profile.png)
+![](https://github.com/budarin/use-react-redux/blob/master/profile.png?raw=true)
 
 ## Как использовать
 
