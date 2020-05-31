@@ -16,7 +16,7 @@ const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffec
 
 setBatch(ReactDOM.unstable_batchedUpdates);
 
-const useStore = (reducer: Reducer<any>, initState = emptyObject, middlewares = emptyMiddlewaresArray) => {
+const createStore = (reducer: Reducer<any>, initState = emptyObject, middlewares = emptyMiddlewaresArray) => {
     const [state, dispatch] = React.useReducer(reducer, initState);
     const currentState = useRef(state);
 
@@ -46,7 +46,7 @@ const useStore = (reducer: Reducer<any>, initState = emptyObject, middlewares = 
 
 export const createProvider = (StateContext: React.Context<any>, DispatchContext: React.Context<Dispatch<Action>>) => {
     function StoreProvider({ reducer, initialState = emptyObject, middlewares, children }: StoreProvider) {
-        const { state, dispatch } = useStore(reducer, initialState, middlewares);
+        const { state, dispatch } = createStore(reducer, initialState, middlewares);
 
         return (
             <DispatchContext.Provider value={dispatch}>
