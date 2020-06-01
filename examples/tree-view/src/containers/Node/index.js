@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { createSelector } from 'reselect';
 
 import Node from '../../components/Node';
@@ -17,9 +17,7 @@ const ConnectedNode = (ownProps) => {
     const selector = useMemo(createNodeSelector, []);
     const containerProps = useStore(selector, actionCreators, ownProps);
 
-    return useMemo(() => <Node {...containerProps} />, [containerProps]);
+    return <Node {...containerProps} />;
 };
 
-const ConnectedNodeMemo = memo(ConnectedNode);
-
-export default ConnectedNodeMemo;
+export default ConnectedNode;
