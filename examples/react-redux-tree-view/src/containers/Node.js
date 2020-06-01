@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 
@@ -28,4 +28,4 @@ const ConnectedNode = (ownProps) => {
     return <Node {...ownProps} {...stateProps} {...dispatchedActions} />;
 };
 
-export default ConnectedNode;
+export default memo(ConnectedNode);
