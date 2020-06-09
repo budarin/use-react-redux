@@ -50,7 +50,7 @@ const a = useContextSelection((state) => state.a);
 app-store.js
 
 ```jsx
-import { createContext, createStoreAccessors } from '@budarin/use-react-redux';
+import { createContext, createStorage } from '@budarin/use-react-redux';
 
 const StateContext = createContext();
 const DispatchContext = createContext();
