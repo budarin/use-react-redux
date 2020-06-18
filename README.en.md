@@ -222,7 +222,7 @@ Function that creates the `useStore`hook and the `StoreProvider` component for a
 | Param           | Type          | Description                        | Optional / Required |
 | --------------- | ------------- | ---------------------------------- | ------------------- |
 | StateContext    | React.Context | Context that stores the            | Required            |
-| DispatchContext | React.Context | Context, which stores the dispatch | Required method     |
+| DispatchContext | React.Context | Context, which stores the dispatch | Required            |
 
 -   **Return value**: {useStore, StoreProvider object }
 
@@ -239,7 +239,7 @@ Method that creates a `useStore` hook for a pair of contests specified when crea
 | Param           | Type          | Description                        | Optional / Required |
 | --------------- | ------------- | ---------------------------------- | ------------------- |
 | StateContext    | React.Context | Context that stores the            | Required            |
-| DispatchContext | React.Context | Context, which stores the dispatch | Required method     |
+| DispatchContext | React.Context | Context, which stores the dispatch | Required            |
 
 -   **The return value**: hook useStore
 
@@ -256,7 +256,7 @@ Method that creates the `StoreProvider` component for a pair of contests specifi
 | Param           | Type          | Description                        | Optional / Required |
 | --------------- | ------------- | ---------------------------------- | ------------------- |
 | StateContext    | React.Context | Context that stores the            | Required            |
-| DispatchContext | React.Context | Context, which stores the dispatch | Required method     |
+| DispatchContext | React.Context | Context, which stores the dispatch | Required            |
 
 -   **Return value**: StoreProvider component
 
