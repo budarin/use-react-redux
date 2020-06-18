@@ -1,5 +1,7 @@
 # @budarin/use-react-redux
 
+[English Version](https://github.com/budarin/use-react-redux/blob/master/README.en.md)
+
 ## Инсталяция
 
 ```bash
