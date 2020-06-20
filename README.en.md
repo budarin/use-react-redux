@@ -18,7 +18,7 @@ The react-redux package is one big crutch: when it solves a useful task of manag
 - problem of crossing a synchronous redux state stored outside of react with an asynchronous React rendering loop
 - this causes problems zombie children and stale props
 
-The size of redux + react-redux is also quite large - about 16KB of minified code and about 8KB of compressed code.
+The size of redux + react-redux is also quite large - about 16 KB of minified code and about 8 KB of compressed code.
 
 Therefore, a native React solution is required for managing the global state of the application, which stores the state in React and is managed by It.
 
