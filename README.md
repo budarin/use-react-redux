@@ -18,7 +18,7 @@ npm install --save @budarin/use-react-redux
 
 Пакет react-redux представляет из себя один большой костыль: решая полезную задачу управлением состоянием приложения, он порождает проблемы, с которыми ему же и приходится бороться:
 - проблема скрещивания синхронного состояния redux, хранящегося вне react, с асинхронным циклом отрисовки React
-- это порождает проблемы [zombie children и stale props](https://medium.com/@vadim_budarin/react-понятно-о-zombie-children-and-stale-props-d31247ea08).
+- проблемы [zombie children и stale props](https://medium.com/@vadim_budarin/react-понятно-о-zombie-children-and-stale-props-d31247ea08).
 
 Размер redux + react-redux также довольно большой - около 16 кб минифицированного кода и около 8 кб - сжатого.
 

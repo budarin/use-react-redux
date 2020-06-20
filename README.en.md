@@ -16,7 +16,7 @@ A high-performance application state management library implemented in React. Co
 
 The react-redux package is one big crutch: when it solves a useful task of managing the state of an application, it creates problems that it also has to deal with:
 - problem of crossing a synchronous redux state stored outside of react with an asynchronous React rendering loop
-- this causes problems zombie children and stale props
+- problems zombie children and stale props
 
 The size of redux + react-redux is also quite large - about 16 KB of minified code and about 8 KB of compressed code.
 
