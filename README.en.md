@@ -14,13 +14,15 @@ A high-performance application state management library implemented in React. Co
 
 ## Why ?
 
-React-redux version 7. x does not work correctly in Concurrent mode React because React-redux stores the state outside of React.
+The react-redux package is one big crutch: when it solves a useful task of managing the state of an application, it creates problems that it also has to deal with:
+- problem of crossing a synchronous redux state stored outside of react with an asynchronous React rendering loop
+- this causes problems zombie children and stale props
 
 The size of redux + react-redux is also quite large - about 16KB of minified code and about 8KB of compressed code.
 
-React-redux in conjunction with React. hooks can generate [zombie children and stale props](https://react-redux.js.org/api/hooks#stale-props-and-zombie-children).
+Therefore, a native React solution is required for managing the global state of the application, which stores the state in React and is managed by It.
 
-There is a need to have not only the global state of the application, but also local storage for dynamically loaded pages - you can implement this by tinkering with react-redux, but our implementation is simpler.
+There is also a need to have not only the global state of the application, but also local storage for dynamically loaded pages - you can implement this by tinkering with react-redux, but our implementation is simpler.
 
 ## How it works ?
 
