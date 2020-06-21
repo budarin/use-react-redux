@@ -118,7 +118,7 @@ const actionCreators = {
 };
 
 const selector = (state) => state;
-const CounterContainer = (ownPropsd) => {
+const CounterContainer = (ownProps) => {
     const containerProps = useStore(selector, actionCreators, ownProps);
 
     return <Counter {...containerProps} />;
