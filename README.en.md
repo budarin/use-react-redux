@@ -15,8 +15,9 @@ A high-performance application state management library implemented in React. Co
 ## Why ?
 
 The react-redux package is one big crutch: when it solves a useful task of managing the state of an application, it creates problems that it also has to deal with:
-- problem of crossing a synchronous redux state stored outside of react with an asynchronous React rendering loop
-- problems zombie children and stale props
+
+-   problem of crossing a synchronous redux state stored outside of react with an asynchronous React rendering loop
+-   problems zombie children and stale props
 
 The size of redux + react-redux is also quite large - about 16 KB of minified code and about 8 KB of compressed code.
 
@@ -30,7 +31,7 @@ The library uses state storage and modification exclusively in the React context
 
 Its high performance is achieved by using the undocumented features of the `React.createContext API ' inside it, which allow you to avoid calling the render of all components that use access to React.Context, in which changes have occurred.
 
-Thanks to React. Hooks under the hood, only those components that were subscribed to the changes that occurred in the context are called to render.
+Thanks to React.Hooks under the hood, only those components that were subscribed to the changes that occurred in the context are called to render.
 
 This functionality of the context with subscriptions is implemented in the package [use-context-selection](https://www.npmjs.com/package/use-context-selection).
 
@@ -41,7 +42,7 @@ const state = {
     c: 'B value',
 };
 
-// now in component A, you can only listen to changes to` a ' in state
+// now in component A, you can only listen to changes to `a' in state
 const a = useContextSelection((state) => state.a);
 ```
 
