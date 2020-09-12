@@ -32,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "@budarin/use-react-redux": "^1.0.13",
-    "reselect": "^4.0.0"
+    "@budarin/use-react-redux": "latest",
+    "reselect": "latest"
   }
 }
