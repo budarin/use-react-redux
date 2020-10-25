@@ -2,7 +2,7 @@
 
 [English Version](https://github.com/budarin/use-react-redux/blob/master/README.en.md)
 
-## Инсталяция
+## Установка
 
 ```bash
 npm install --save @budarin/use-react-redux
