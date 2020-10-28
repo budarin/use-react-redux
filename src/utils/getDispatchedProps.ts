@@ -1,16 +1,16 @@
 const emptyObject: React.ClassAttributes<any> = {};
 
 interface ActionCreator {
-    (...args: any[]): Dispatch<Action>;
+    (...args: any[]): Dispatch;
 }
 
 interface ActionCreators {
-    (props: any, dispatch: Dispatch<Action>): IHash<ActionCreator>;
+    (props: any, dispatch: Dispatch): IHash<ActionCreator>;
 }
 
 const getDispatchedProps = (
     mapDispatchToProps: ActionCreators | IHash<ActionCreator>,
-    dispatch: Dispatch<Action>,
+    dispatch: Dispatch,
     ownProps = emptyObject,
 ) => () => {
     if (typeof mapDispatchToProps === 'function') {

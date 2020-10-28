@@ -34,7 +34,7 @@ const createStore = (reducer: Reducer<any>, initState = emptyObject, middlewares
         return {
             getState: () => currentState.current,
             dispatch: (action: Action) => {
-                const enhancedDispatch: Dispatch<Action> = enhancedDispatchFunc();
+                const enhancedDispatch: Dispatch = enhancedDispatchFunc();
 
                 return enhancedDispatch(action);
             },
@@ -44,8 +44,8 @@ const createStore = (reducer: Reducer<any>, initState = emptyObject, middlewares
     return { state, dispatch: store.dispatch };
 };
 
-export const createProvider = (StateContext: React.Context<any>, DispatchContext: React.Context<Dispatch<Action>>) => {
-    function StoreProvider({ reducer, initialState = emptyObject, middlewares, children }: StoreProvider) {
+export const createProvider = (StateContext: React.Context<any>, DispatchContext: React.Context<Dispatch>) => {
+    function StoreProvider({ reducer, initialState = emptyObject, middlewares, children }: IStoreProvider) {
         const { state, dispatch } = createStore(reducer, initialState, middlewares);
 
         return (
@@ -58,12 +58,12 @@ export const createProvider = (StateContext: React.Context<any>, DispatchContext
     return memo(StoreProvider);
 };
 
-export const createUseStore = (StateContext: React.Context<any>, DispatchContext: React.Context<Dispatch<Action>>) => (
+export const createUseStore = (StateContext: React.Context<any>, DispatchContext: React.Context<Dispatch>) => (
     selector = emptySelector,
-    actions: IHash<(...args: any[]) => Dispatch<Action>> = emptyObject,
+    actions: IHash<(...args: any[]) => Dispatch> = emptyObject,
     containerProps: React.ClassAttributes<any> = emptyObject,
 ) => {
-    const dispatch = useContext<Dispatch<Action>>(DispatchContext);
+    const dispatch = useContext<Dispatch>(DispatchContext);
     const dispatchProps = useMemo(getDispatchedProps(actions, dispatch, containerProps), [dispatch, actions]);
     const stateProps = useContextSelection(StateContext, (state: any) => selector(state, containerProps));
 
@@ -78,7 +78,7 @@ export const createUseStore = (StateContext: React.Context<any>, DispatchContext
     );
 };
 
-export const createStorage = (StateContext: React.Context<any>, DispatchContext: React.Context<Dispatch<Action>>) => ({
+export const createStorage = (StateContext: React.Context<any>, DispatchContext: React.Context<Dispatch>) => ({
     useStore: createUseStore(StateContext, DispatchContext),
     StoreProvider: createProvider(StateContext, DispatchContext),
 });

@@ -1009,9 +1009,9 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@budarin/use-react-redux@latest":
-  version "1.0.44"
-  resolved "https://registry.yarnpkg.com/@budarin/use-react-redux/-/use-react-redux-1.0.44.tgz#47dec6e397f77511e393e304573449ac70bd3ef6"
-  integrity sha512-7zassWoA9MuNUA77/O6xD6mf20N6+uh5I8JyKern8mRVwqOpYiKdXfVDOV/ISJbNTWflZYp4lrCaA81C5T5O8A==
+  version "1.0.45"
+  resolved "https://registry.yarnpkg.com/@budarin/use-react-redux/-/use-react-redux-1.0.45.tgz#494e720422db1a6bf38d120567e771c954a5ad23"
+  integrity sha512-dBmLPrJRD4S4XFzniXxuliwHogSBapl80Nl+KmuJkz2BH5Uqxu/3lFSfriQ3Df9yAy+gsflsFmq1BNHBLDFyrA==
   dependencies:
     use-context-selection "^1.4.2"
 
@@ -2903,9 +2903,9 @@ camelcase@5.3.1, camelcase@^5.0.0, camelcase@^5.3.1:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 camelcase@^6.0.0, camelcase@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.1.0.tgz#27dc176173725fb0adf8a48b647f4d7871944d78"
-  integrity sha512-WCMml9ivU60+8rEJgELlFp1gxFcEGxwYleE3bziHEDeqsqAWGHdimB7beBFGjLzVNgPGyDsfgXLQEYMpmIFnVQ==
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.2.0.tgz#924af881c9d525ac9d87f40d964e5cea982a1809"
+  integrity sha512-c7wVvbw3f37nuobQNtgsgG9POC9qMbNuMQmTCqZv23b6MIz0fcYpBiOlv9gEN/hdLdnZTDQhg6e9Dq5M1vKvfg==
 
 caniuse-api@^3.0.0:
   version "3.0.0"

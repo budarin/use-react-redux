@@ -1,28 +1,28 @@
-interface IHash<T> {
+declare interface IHash<T> {
     [key: string]: T;
 }
 
-interface Action {
+declare interface Action {
     type: string;
     [key: string]: any;
 }
 
-interface Dispatch<S> {
+declare interface Dispatch {
     <A extends Action>(action: A): any;
 }
 
-type Reducer<S> = <A extends Action>(state: S, action: A) => S;
+declare type Reducer<S> = <A extends Action>(state: S, action: A) => S;
 
-interface MiddlewareAPI<S> {
+declare interface MiddlewareAPI<S> {
     dispatch: Dispatch<S>;
     getState(): S;
 }
 
-interface Middleware {
+declare interface Middleware {
     <Action>(api: MiddlewareAPI<Action>): (next: Dispatch<Action>) => Dispatch<Action>;
 }
 
-interface StoreProvider {
+declare interface IStoreProvider {
     reducer: Reducer<any>;
     initialState: IHash<any>;
     middlewares: Array<Middleware>;
