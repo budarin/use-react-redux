@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useContext, useRef } from 'react';
+import React, { memo, useMemo, useContext, useRef, useLayoutEffect, useEffect } from 'react';
 import { useContextSelection } from 'use-context-selection';
 import ReactDOM from 'react-dom';
 
@@ -12,7 +12,7 @@ export const batch = getBatch();
 const emptyObject = {};
 const emptyMiddlewaresArray: Array<Middleware> = [];
 const emptySelector = (x: any, _: React.ClassAttributes<any>) => x;
-// const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 setBatch(ReactDOM.unstable_batchedUpdates);
 
@@ -20,9 +20,9 @@ const createStore = (reducer: Reducer<any>, initState = emptyObject, middlewares
     const [state, dispatch] = React.useReducer(reducer, initState);
     const currentState = useRef(state);
 
-    // useIsomorphicLayoutEffect(() => {
-    currentState.current = state;
-    // });
+    useIsomorphicLayoutEffect(() => {
+        currentState.current = state;
+    });
 
     const store = useMemo(() => {
         function enhancedDispatchFunc() {
