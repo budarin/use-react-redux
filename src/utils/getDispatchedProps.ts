@@ -22,7 +22,7 @@ export const getDispatchedProps = (
     // создаем из actionCreators - функции генерирующие методы вызывающие dispatch со сгенерированным payload
     const actionNames = Object.keys(actions);
     const len = actionNames.length;
-    const res = Object.create(null) as Record<string, any>;
+    const dispatchedActions = Object.create(null) as Record<string, any>;
 
     if (len > 0) {
         const dispatchFunc = (key: string) => (...anyProps: any[]) => {
@@ -45,10 +45,10 @@ export const getDispatchedProps = (
                     continue;
                 }
 
-                res[key] = dispatchFunc(key);
+                dispatchedActions[key] = dispatchFunc(key);
             }
         }
     }
 
-    return res;
+    return dispatchedActions;
 };
