@@ -17,8 +17,9 @@ npm install --save @budarin/use-react-redux
 ## Зачем ?
 
 Пакет react-redux представляет из себя один большой костыль: решая полезную задачу управлением состоянием приложения, он порождает проблемы, с которыми ему же и приходится бороться:
-- проблема скрещивания синхронного состояния redux, хранящегося вне react, с асинхронным циклом отрисовки React
-- проблемы [zombie children и stale props](https://medium.com/@vadim_budarin/react-понятно-о-zombie-children-and-stale-props-d31247ea08).
+
+-   проблема скрещивания синхронного состояния redux, хранящегося вне react, с асинхронным циклом отрисовки React
+-   проблемы [zombie children и stale props](https://medium.com/@vadim_budarin/react-понятно-о-zombie-children-and-stale-props-d31247ea08).
 
 Размер redux + react-redux также довольно большой - около 16 кб минифицированного кода и около 8 кб - сжатого.
 
@@ -56,13 +57,12 @@ const a = useContextSelection((state) => state.a);
 app-store.js
 
 ```jsx
-import { createContext, createStorage } from '@budarin/use-react-redux';
+import { createStorage } from '@budarin/use-react-redux';
 
-const StateContext = createContext();
-const DispatchContext = createContext();
-const storage = createStorage(StateContext, DispatchContext);
+const { useStore, StoreProvider } = createStorage();
 
-export default storage;
+export const useAppStore = useStore;
+export const AppStoreProvider = StoreProvider;
 ```
 
 опишем наш логирующий middleware
@@ -83,10 +83,8 @@ export default const appMiddlewares = [loggerMiddleware];
 app.js
 
 ```javascript
-import storage from './app-store';
+import { useAppStore, AppStoreProvider } from './app-store';
 import appMiddlewares from './middlewares';
-
-const { useStore, StoreProvider } = storage;
 
 const Counter = ({ counter, actions }) => (
     <div>
@@ -119,19 +117,19 @@ const actionCreators = {
 
 const selector = (state) => state;
 const CounterContainer = (ownProps) => {
-    const containerProps = useStore(selector, actionCreators, ownProps);
+    const containerProps = useAppStore(selector, actionCreators, ownProps);
 
     return <Counter {...containerProps} />;
 };
 
 export default const App = () => (
-    <StoreProvider
+    <AppStoreProvider
         reducer={reducer}
         initialState={initialState}
         middlewares={appMiddlewares}
     >
         <CounterContainer />
-    </StoreProvider>
+    </AppStoreProvider>
 );
 ```
 
@@ -150,10 +148,7 @@ export default const App = () => (
 Экспортируемые методы:
 
 -   [batch](#batch)
--   [createContext](#createContext)
 -   [createStorage](#createStorage)
--   [createUseStore](#createUseStore)
--   [createProvider](#createProvider)
 
 Генерируемые хуки и компоненты:
 
@@ -187,87 +182,16 @@ window.setTimeout(
 );
 ```
 
-### createContext
-
-Создает "умный" `Context` который сравнивает изменения предыдущего состояния с новым при помощи `equalityFn` и если обнаружено не совпадение - отправляет изменения подписчикам
-
-| Param      | Type     | Description                                                                                                          | Optional / Required |
-| ---------- | -------- | -------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| initValue  | any      | Начальное состояние Context                                                                                          | Optional            |
-| equalityFn | Function | Функция, которая используется для сравнения предыдущего и нового состояния. по-умолчанию используется isEqualShallow | Optional            |
-
--   **Возвращаемое значение**: Context
-
-#### Пример
-
-```jsx
-const StateContext = createContext({ counter: 0 }, myEqualityFunction);
-```
-
-### isEqualShallow
-
-Фунция по-умолчанию для сравнения состояний контекста когда в `createContext` не указана `equalityFn`.
-Вы должны понимать 2 вещи относительно этой функции:
-
--   она делает не глубокую проверку равенства для высокой производительности;
--   она не сравнивает свойства-функции в объектах таким образом нет необходимости использовать `React.useCallback` для проброса функций внутрь объекта для того, чтобы функция не вызывала срабатывание.
-
-| Param    | Type | Description          | Optional / Required |
-| -------- | ---- | -------------------- | ------------------- |
-| newState | any  | Новое состояние      | Required            |
-| oldState | any  | Предыдущее состояние | Required            |
-
--   **Возвращаемое значение**: boolean; true - если объекты идентичны и false - если они различны
-
 ### createStorage
 
 Функция, которая создает хук `useStore` и компонент `StoreProvider` для, указанных при его создании, пары контестов.
-
-| Param           | Type          | Description                      | Optional / Required |
-| --------------- | ------------- | -------------------------------- | ------------------- |
-| StateContext    | React.Context | Context, хранящий состояние      | Required            |
-| DispatchContext | React.Context | Context, хранящий метод dispatch | Required            |
 
 -   **Возвращаемое значение**: объект { useStore, StoreProvider }
 
 #### Пример
 
 ```jsx
-const { useStore, StoreProvider } = createStorage(StateContext, DispatchContext);
-```
-
-### createUseStore
-
-Метод, создающий хук `useStore` для, указанных при его создании, пары контестов.
-
-| Param           | Type          | Description                      | Optional / Required |
-| --------------- | ------------- | -------------------------------- | ------------------- |
-| StateContext    | React.Context | Context, хранящий состояние      | Required            |
-| DispatchContext | React.Context | Context, хранящий метод dispatch | Required            |
-
--   **Возвращаемое значение**: хук useStore
-
-#### Пример
-
-```jsx
-const useStore = createUseStore(StateContext, DispatchContext);
-```
-
-### createProvider
-
-Метод, создающий компонент `StoreProvider` для, указанных при его создании, пары контестов.
-
-| Param           | Type          | Description                      | Optional / Required |
-| --------------- | ------------- | -------------------------------- | ------------------- |
-| StateContext    | React.Context | Context, хранящий состояние      | Required            |
-| DispatchContext | React.Context | Context, хранящий метод dispatch | Required            |
-
--   **Возвращаемое значение**: компонент StoreProvider
-
-#### Пример
-
-```jsx
-const StoreProvider = createProvider(StateContext, DispatchContext);
+const { useStore, StoreProvider } = createStorage();
 ```
 
 ### useStore

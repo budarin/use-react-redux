@@ -1,90 +1,118 @@
+import { compose } from 'redux';
 import ReactDOM from 'react-dom';
-import { useContextSelection } from 'use-context-selection';
-import { memo, useMemo, useContext, useRef, useLayoutEffect, useEffect, useReducer } from 'react';
 
-import type { Context, ClassAttributes } from 'react';
+import { createContext, useContextSelection } from 'use-context-selection';
+import { useLayoutEffect, useEffect, useReducer, ClassAttributes, useContext, useMemo, useRef } from 'react';
 
-import getDispatchedProps from './utils/getDispatchedProps';
+import { getDispatchedProps } from './utils/getDispatchedProps';
 import { setBatch, getBatch } from './utils/batch';
-import compose from './utils/compose';
 
-export { createContext } from 'use-context-selection';
 export const batch = getBatch();
-
-const emptyObject = {};
-const emptyMiddlewaresArray: Array<Middleware> = [];
-const emptySelector = (x: any, _: React.ClassAttributes<any>) => x;
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 setBatch(ReactDOM.unstable_batchedUpdates);
 
-const createStore = (reducer: Reducer<any>, initState = emptyObject, middlewares = emptyMiddlewaresArray) => {
-    const [state, dispatch] = useReducer(reducer, initState);
-    const currentState = useRef(state);
+const noop = (_: any[]) => {};
+const emptyObject = {};
+const emptyMiddlewaresArray: Array<Middleware> = [];
+const emptySelector = noop as (...args: any) => Partial<any>;
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
-    useIsomorphicLayoutEffect(() => {
-        currentState.current = state;
+interface IAppStoreProvider {
+    children: React.ReactNode;
+    reducer: Reducer<any>;
+    initialState: any;
+    middlewares: Array<Middleware>;
+}
 
-        return () => {
-            currentState.current = undefined;
-        };
-    });
+interface IUseAppStore {
+    selector?: (...args: any) => any;
+    actions?: IHash<(...args: any[]) => Dispatch>;
+    containerProps?: ClassAttributes<any>;
+}
 
-    const store = useMemo(() => {
-        function enhancedDispatchFunc() {
-            const chain = middlewares.map((middleware) => middleware(store));
+interface IUseAppStoreResult {
+    props: any;
+    actions: () => Record<string, any>;
+    dispatch: Dispatch;
+}
 
-            return compose(...chain)(dispatch);
-        }
+// eslint-disable-next-line max-lines-per-function
+export const createStorage = () => {
+    const StateContext = createContext<any>(emptyObject);
+    const DispatchContext = createContext<Dispatch>(noop as Dispatch);
 
-        return {
-            getState: () => currentState.current,
-            dispatch: (action: Action) => {
-                const enhancedDispatch: Dispatch = enhancedDispatchFunc();
+    let internalDispatch: (action: Action) => any;
+    const getDispatch = () => internalDispatch;
 
-                return enhancedDispatch(action);
-            },
-        };
-    }, [middlewares]);
+    // eslint-disable-next-line max-lines-per-function
+    const StoreProvider = (props: IAppStoreProvider): JSX.Element => {
+        const { children, reducer, initialState = emptyObject, middlewares = emptyMiddlewaresArray } = props;
+        const [state, dispatch] = useReducer(reducer, initialState);
+        const currentState = useRef(state);
 
-    return { state, dispatch: store.dispatch };
-};
+        useIsomorphicLayoutEffect(() => {
+            currentState.current = state;
 
-export const createProvider = (StateContext: Context<any>, DispatchContext: Context<Dispatch>) => {
-    function StoreProvider({ reducer, initialState = emptyObject, middlewares, children }: IStoreProvider) {
-        const { state, dispatch } = createStore(reducer, initialState, middlewares);
+            return () => {
+                currentState.current = {};
+            };
+        });
+
+        const store = useMemo(() => {
+            function enhancedDispatchFunc() {
+                const chain = middlewares.map((middleware) => middleware(store));
+
+                return compose(...chain)(dispatch);
+            }
+
+            return {
+                getState: () => currentState.current,
+                dispatch: (action: Action) => {
+                    const enhancedDispatch: Dispatch = enhancedDispatchFunc() as Dispatch;
+                    return enhancedDispatch(action);
+                },
+            };
+        }, [middlewares]);
+
+        internalDispatch = store.dispatch;
 
         return (
-            <DispatchContext.Provider value={dispatch}>
+            <DispatchContext.Provider value={store.dispatch}>
                 <StateContext.Provider value={state}>{children}</StateContext.Provider>
             </DispatchContext.Provider>
         );
-    }
+    };
 
-    return memo(StoreProvider);
-};
-
-export const createUseStore = (StateContext: Context<any>, DispatchContext: Context<Dispatch>) => (
-    selector = emptySelector,
-    actions: IHash<(...args: any[]) => Dispatch> = emptyObject,
-    containerProps: ClassAttributes<any> = emptyObject,
-) => {
-    const dispatch = useContext<Dispatch>(DispatchContext);
-    const dispatchProps = useMemo(getDispatchedProps(actions, dispatch, containerProps), [dispatch, actions]);
-    const stateProps = useContextSelection(StateContext, (state: any) => selector(state, containerProps));
-
-    return useMemo<ClassAttributes<any>>(
-        () => ({
-            ...containerProps,
-            ...stateProps,
-            actions: dispatchProps,
+    // eslint-disable-next-line max-lines-per-function
+    const useStore = ({
+        selector = emptySelector,
+        actions = emptyObject,
+        containerProps = emptyObject,
+    }: IUseAppStore): IUseAppStoreResult => {
+        const dispatch = useContext<Dispatch>(DispatchContext);
+        const dispatchProps = useMemo(() => getDispatchedProps(actions, dispatch, containerProps), [
+            actions,
             dispatch,
-        }),
-        [containerProps, stateProps, dispatchProps],
-    );
-};
+            containerProps,
+        ]);
+        const stateProps = useContextSelection<any>(StateContext, (state: any) => selector(state, containerProps));
 
-export const createStorage = (StateContext: Context<any>, DispatchContext: Context<Dispatch>) => ({
-    useStore: createUseStore(StateContext, DispatchContext),
-    StoreProvider: createProvider(StateContext, DispatchContext),
-});
+        return useMemo(
+            () => ({
+                props: {
+                    ...containerProps,
+                    ...stateProps,
+                },
+                actions: dispatchProps,
+                dispatch,
+            }),
+            [containerProps, stateProps, dispatchProps, dispatch],
+        );
+    };
+
+    return {
+        useStore,
+        getDispatch,
+        StoreProvider,
+    };
+};

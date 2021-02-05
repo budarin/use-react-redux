@@ -2,7 +2,7 @@ import React, { useMemo, memo } from 'react';
 import { createSelector } from 'reselect';
 
 import Node from '../../components/Node';
-import { useStore } from '../../utils/storage';
+import { useAppStore } from '../../utils/storage';
 import { actionCreators, selectNode } from '../../ducks';
 
 // мемоизируем селектор потому что в нем есть computed prop - childCount
@@ -15,7 +15,7 @@ const createNodeSelector = () =>
 
 const ConnectedNode = (ownProps) => {
     const selector = useMemo(createNodeSelector, []);
-    const containerProps = useStore(selector, actionCreators, ownProps);
+    const containerProps = useAppStore(selector, actionCreators, ownProps);
 
     return <Node {...containerProps} />;
 };

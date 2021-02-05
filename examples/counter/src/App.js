@@ -1,9 +1,6 @@
-import React from 'react';
 import appMiddlewares from './utils/middlewares';
-import storage from './utils/storage';
+import { useAppStore, AppStoreProvider } from './utils/storage';
 import { initialState, reducer, selector, actionCreators } from './utils/duck';
-
-const { useStore, StoreProvider } = storage;
 
 const Counter = ({ counter, actions }) => {
     return (
@@ -19,15 +16,15 @@ const Counter = ({ counter, actions }) => {
 };
 
 const CounterContainer = () => {
-    const containerProps = useStore(selector, actionCreators);
+    const containerProps = useAppStore(selector, actionCreators);
 
     return <Counter {...containerProps} />;
 };
 
 const App = () => (
-    <StoreProvider reducer={reducer} initialState={initialState} middlewares={appMiddlewares}>
+    <AppStoreProvider initialState={initialState} reducer={reducer} middlewares={appMiddlewares}>
         <CounterContainer />
-    </StoreProvider>
+    </AppStoreProvider>
 );
 
 export default App;

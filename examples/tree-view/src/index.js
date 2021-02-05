@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
@@ -7,7 +6,7 @@ import App from './components/App';
 import Node from './containers/Node';
 import generateTree from './utils/generateTree';
 import appMiddlewares from './middlewares';
-import { StoreProvider } from './utils/storage';
+import { AppStoreProvider } from './utils/storage';
 
 import './index.css';
 
@@ -15,9 +14,9 @@ const tree = generateTree();
 
 ReactDOM.render(
     <App>
-        <StoreProvider reducer={reducer} initialState={tree} middlewares={appMiddlewares}>
+        <AppStoreProvider reducer={reducer} initialState={tree} middlewares={appMiddlewares}>
             <Node id={0} />
-        </StoreProvider>
+        </AppStoreProvider>
     </App>,
     document.getElementById('root'),
 );

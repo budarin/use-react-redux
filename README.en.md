@@ -55,13 +55,12 @@ The following is the result of profiling adding a node to the tree. It confirms 
 app-store.js
 
 ```jsx
-import { createContext, createStorage } from '@budarin/use-react-redux';
+import { createStorage } from '@budarin/use-react-redux';
 
-const StateContext = createContext();
-const DispatchContext = createContext();
-const storage = createStorage(StateContext, DispatchContext);
+const { useStore, StoreProvider } = createStorage();
 
-export default storage;
+export const useAppStore = useStore;
+export const AppStoreProvider = StoreProvider;
 ```
 
 let's describe our logging middleware
@@ -82,10 +81,8 @@ it remains to implement the application
 app.js
 
 ```javascript
-import storage from './app-store';
+import { useAppStore, AppStoreProvider } from './app-store';
 import appMiddlewares from './middlewares';
-
-const { useStore, StoreProvider } = storage;
 
 const Counter = ({ counter, actions }) => (
     <div>
@@ -118,19 +115,19 @@ const actionCreators = {
 
 const selector = (state) => state;
 const CounterContainer = (ownProps) => {
-    const containerProps = useStore(selector, actionCreators, ownProps);
+    const containerProps = useAppStore(selector, actionCreators, ownProps);
 
     return <Counter {...containerProps} />;
 };
 
 export default const App = () => (
-    <StoreProvider
+    <AppStoreProvider
         reducer={reducer}
         initialState={initialState}
         middlewares={appMiddlewares}
     >
         <CounterContainer />
-    </StoreProvider>
+    </AppStoreProvider>
 );
 ```
 
@@ -149,10 +146,7 @@ Have a nice development! 😊
 Exported methods:
 
 -   [batch](#batch)
--   [createContext](#createContext)
 -   [createStorage](#createStorage)
--   [createUseStore](#createUseStore)
--   [createProvider](#createProvider)
 
 Generated hooks and components:
 
@@ -186,87 +180,16 @@ window.setTimeout(
 );
 ```
 
-### createContext
-
-Creates a "smart" `Context` that compares changes to the previous state with the new one using `equalityFn` and if no match is found, sends the changes to subscribers
-
-| Param      | Type     | Description                                                                             | Optional / Required |
-| ---------- | -------- | --------------------------------------------------------------------------------------- | ------------------- |
-| initValue  | any      | the Initial state of the Context                                                        | Optional            |
-| equalityFn | Function | Function that is used to compare the previous and new state. by default, isEqualShallow | Optional            | is used |
-
--   **Return value**: Context
-
-#### Example
-
-```jsx
-const StateContext = createContext({ counter: 0 }, myEqualityFunction);
-```
-
-### isEqualShallow
-
-The default function for comparing context States when `createContext` does not specify `equalityFn`.
-You should understand 2 things about this function:
-
--   it doesn't do a deep equality check for high performance;
--   it does not compare properties-functions in objects so there is no need to use `React.useCallback` to throw functions inside the object in order for the function not to trigger.
-
-| Param    | Type | Description    | Optional / Required |
-| -------- | ---- | -------------- | ------------------- |
-| newState | any  | New state      | Required            |
-| oldState | any  | Previous state | Required            |
-
--   **Return value**: boolean; true - if the objects are identical and false - if they are different
-
 ### createStorage
 
 Function that creates the `useStore`hook and the `StoreProvider` component for a pair of contests specified when creating It.
-
-| Param           | Type          | Description                        | Optional / Required |
-| --------------- | ------------- | ---------------------------------- | ------------------- |
-| StateContext    | React.Context | Context that stores the            | Required            |
-| DispatchContext | React.Context | Context, which stores the dispatch | Required            |
 
 -   **Return value**: {useStore, StoreProvider object }
 
 #### Example
 
 ```jsx
-const { useStore, StoreProvider } = createStorage(StateContext, DispatchContext);
-```
-
-### createUseStore
-
-Method that creates a `useStore` hook for a pair of contests specified when creating it.
-
-| Param           | Type          | Description                        | Optional / Required |
-| --------------- | ------------- | ---------------------------------- | ------------------- |
-| StateContext    | React.Context | Context that stores the            | Required            |
-| DispatchContext | React.Context | Context, which stores the dispatch | Required            |
-
--   **The return value**: hook useStore
-
-#### Example
-
-```jsx
-const useStore = createUseStore(StateContext, DispatchContext);
-```
-
-### createProvider
-
-Method that creates the `StoreProvider` component for a pair of contests specified when creating It.
-
-| Param           | Type          | Description                        | Optional / Required |
-| --------------- | ------------- | ---------------------------------- | ------------------- |
-| StateContext    | React.Context | Context that stores the            | Required            |
-| DispatchContext | React.Context | Context, which stores the dispatch | Required            |
-
--   **Return value**: StoreProvider component
-
-#### Example
-
-```jsx
-const StoreProvider = createProvider(StateContext, DispatchContext);
+const { useStore, StoreProvider } = createStorage();
 ```
 
 ### useStore

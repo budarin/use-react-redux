@@ -1,8 +1,6 @@
-import { createContext, createStorage } from '@budarin/use-react-redux';
+import { createStorage } from '@budarin/use-react-redux';
 
-const StateContext1 = createContext({});
-const DispatchContext1 = createContext({});
+const { useStore, StoreProvider } = createStorage();
 
-const storage = createStorage(StateContext1, DispatchContext1);
-
-export default storage;
+export const useAppStore = useStore;
+export const AppStoreProvider = StoreProvider;
