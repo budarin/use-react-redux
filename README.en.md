@@ -221,6 +221,12 @@ const { props, actions, dispatch } = useStore({ selector, actions, containerProp
 
 Provider component for wrapping the application, in order to throw Context inside the React component tree
 
+| Param          | Type         | Description                                            | Optional / Required |
+| -------------- | ------------ | ------------------------------------------------------ | ------------------- |
+| initialState   | object       | an object that stores the application state            | Required            |
+| reducer        | reducer[]    | array of reducers for generating the application state | Optional            |
+| appMiddlewares | middleware[] | array of middleware functions                          | Optional            |
+
 #### Example
 
 ```jsx
