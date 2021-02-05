@@ -195,6 +195,7 @@ const { useStore, StoreProvider } = createStorage();
 ### useStore
 
 A hook that connects the container to the store to get data and send it actions.
+
 Input parameter - an object:
 
 | Param          | Type              | Description                                                                                   | Optional / Required |
@@ -203,12 +204,12 @@ Input parameter - an object:
 | actions        | Function / Object | an object from event generator functions or a function that creates an event generator object | Optional            |
 | containerProps | any               | properties passed to the container                                                            | Optional            |
 
-**Return value**: object
-| Param | Type | Description | Optional / Required |
-| -------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------- |
-| props | object | resulting container properties obtained as a Union: private properties of the container + properties obtained from the application state + properties obtained from event generators for sending actions to stor using dispatch | Optional |
-| actions | Object | An object with methods to generate events | Optional |
-| dispatch | Dispatch | Dispatch store's method | Required |
+-   **Return value**: object
+    | Param | Type | Description | Optional / Required |
+    | -------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------- |
+    | props | object | resulting container properties obtained as a Union: private properties of the container + properties obtained from the application state + properties obtained from event generators for sending actions to stor using dispatch | Optional |
+    | actions | Object | An object with methods to generate events | Optional |
+    | dispatch | Dispatch | Dispatch store's method | Required |
 
 #### Example
 
