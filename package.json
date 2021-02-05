@@ -1,6 +1,6 @@
 {
     "name": "@budarin/use-react-redux",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "description": "React-redux based on React Context and React Hooks.",
     "keywords": [
         "react",
@@ -29,7 +29,7 @@
     "scripts": {
         "build": "rollup -c",
         "start": "rollup -c -w",
-        "prepublish": "run-s build",
+        "prepublish": "sh rm ./dist -r -f && run-s build",
         "publish:it": "npm publish --access public",
         "test": "echo \"no test specified\" && exit 0",
         "test_": "run-s test:unit test:lint test:build",
