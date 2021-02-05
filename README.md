@@ -223,11 +223,11 @@ const { props, actions, dispatch } = useStore({ selector, actions, containerProp
 
 Компонент-провайдер для оборачивания приложения, с целью проброса Context внутрь дерева компонентов React
 
-| Param          | Type         | Description                                             | Optional / Required |
-| -------------- | ------------ | ------------------------------------------------------- | ------------------- |
-| initialState   | object       | объект, хранящий состояние приложения                   | Required            |
-| reducer        | reducer[]    | массив редьюсеров для формирования состояния приложения | Optional            |
-| appMiddlewares | middleware[] | массив функций middleware                               | Optional            |
+| Param          | Type         | Description                                    | Optional / Required |
+| -------------- | ------------ | ---------------------------------------------- | ------------------- |
+| initialState   | object       | объект, хранящий состояние приложения          | Optional            |
+| reducer        | reducer[]    | редьюсер для формирования состояния приложения | Required            |
+| appMiddlewares | middleware[] | массив функций middleware                      | Optional            |
 
 #### Пример
 
