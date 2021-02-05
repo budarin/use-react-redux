@@ -12,7 +12,7 @@ export const getDispatchedProps = (
     mapDispatchToProps: ActionCreators | IHash<ActionCreator>,
     dispatch: Dispatch,
     ownProps = emptyObject,
-) => (): Record<string, any> | undefined => {
+) => (): Record<string, any> => {
     // Если mapDispatchToProps - функция - вызываем ее и возвращаем результат
     if (typeof mapDispatchToProps === 'function') {
         return mapDispatchToProps(ownProps, dispatch);
@@ -21,9 +21,9 @@ export const getDispatchedProps = (
     // создаем из actionCreators - функции генерирующие методы вызывающие dispatch со сгенерированным payload
     const dispatchPropsKeys = Object.keys(mapDispatchToProps);
     const len = dispatchPropsKeys.length;
+    const res = Object.create(null) as Record<string, any>;
 
     if (len > 0) {
-        const res = Object.create(null) as Record<string, any>;
         const dispatchFunc = (key: string) => (...anyProps: any[]) => {
             const method = mapDispatchToProps[key];
             const action = method && method(...anyProps);
@@ -48,8 +48,7 @@ export const getDispatchedProps = (
                 res[key] = dispatchFunc(key);
             }
         }
-        return res;
     }
 
-    return undefined;
+    return res;
 };

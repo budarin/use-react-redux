@@ -26,7 +26,7 @@ interface IAppStoreProvider {
 
 interface IUseAppStore {
     selector?: (...args: any) => any;
-    actions?: IHash<(...args: any[]) => Dispatch>;
+    actions: IHash<(...args: any[]) => Dispatch>;
     containerProps?: ClassAttributes<any>;
 }
 
