@@ -86,7 +86,7 @@ app.js
 import { useAppStore, AppStoreProvider } from './app-store';
 import appMiddlewares from './middlewares';
 
-const Counter = ({ counter, actions }) => (
+const Counter = ({ props: { counter }, actions }) => (
     <div>
         <p>
             Clicked: {counter} times
@@ -117,15 +117,15 @@ const actionCreators = {
 
 const selector = (state) => state;
 const CounterContainer = (ownProps) => {
-    const containerProps = useAppStore(selector, actionCreators, ownProps);
+    const containerProps = useAppStore({ selector, actions: actionCreators, ownProps });
 
     return <Counter {...containerProps} />;
 };
 
 export default const App = () => (
     <AppStoreProvider
-        reducer={reducer}
         initialState={initialState}
+        reducer={reducer}
         middlewares={appMiddlewares}
     >
         <CounterContainer />
@@ -197,22 +197,25 @@ const { useStore, StoreProvider } = createStorage();
 ### useStore
 
 Хук, который подключает контейнер к состоянию приложения для, указанных при его создании, пары контестов.
+Входной параметр - объект:
 
-| Param          | Type              | Description                                                                             | Optional / Required |
-| -------------- | ----------------- | --------------------------------------------------------------------------------------- | ------------------- |
-| selector       | Function          | функция селектор, для выборки данных из состояния                                       | Optional            |
-| actionCreators | Function / Object | Объект из функций генераторов событий или функция, создающая объект генераторов событий | Optional            |
-| ownProps       | any               | свойства, пробрасываемые контейнеру                                                     | Optional            |
+| Param    | Type              | Description                                                                             | Optional / Required |
+| -------- | ----------------- | --------------------------------------------------------------------------------------- | ------------------- |
+| selector | Function          | функция селектор, для выборки данных из состояния                                       | Optional            |
+| actions  | Function / Object | объект из функций генераторов событий или функция, создающая объект генераторов событий | Optional            |
+| ownProps | any               | свойства, пробрасываемые контейнеру                                                     | Optional            |
 
--   **Возвращаемое значение**: props - результирующие свойства контейнера, полученные как объединение:
-    -   собственных свойств контейнера
-    -   свойств, полученных из состояния приложения
-    -   свойств, полученных из генераторов событий для отправки actions в stor при помощи dispatch
+**Возвращаемое значение**: объект
+| Param | Type | Description |
+| -------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| props | object | результирующие свойства контейнера, полученные как объединение: собственных свойств контейнера + свойств, полученных из состояния приложения + свойств, полученных из генераторов событий для отправки actions в stor при помощи dispatch |
+| actions | Object | Объект, содержащий методы, вызывающие события |
+| dispatch | Dispatch | Метод dispatch хранилища данных |
 
 #### Пример
 
 ```jsx
-const containerProps = useStore(selector, actionCreators, ownProps);
+const { props, actions, dispatch } = useStore({ selector, actions, ownProps });
 ```
 
 ### StoreProvider

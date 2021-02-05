@@ -84,7 +84,7 @@ app.js
 import { useAppStore, AppStoreProvider } from './app-store';
 import appMiddlewares from './middlewares';
 
-const Counter = ({ counter, actions }) => (
+const Counter = ({ counter: { counter }, actions }) => (
     <div>
         <p>
             Clicked: {counter} times
@@ -115,7 +115,7 @@ const actionCreators = {
 
 const selector = (state) => state;
 const CounterContainer = (ownProps) => {
-    const containerProps = useAppStore(selector, actionCreators, ownProps);
+    const containerProps = useAppStore({ selector, actions: actionCreators, ownProps });
 
     return <Counter {...containerProps} />;
 };
@@ -195,22 +195,25 @@ const { useStore, StoreProvider } = createStorage();
 ### useStore
 
 A hook that connects the container to the app state for a pair of contests specified when creating it.
+Input parameter - an object:
 
-| Param          | Type                                                            | Description                                                                                   | Optional / Required |
-| -------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------- |
-| selector       | Function / function selector, for selecting data from the state | Optional                                                                                      |
-| actionCreators | Function / Object                                               | An object from event generator functions or a function that creates an event generator object | Optional            |
-| ownProps       | any / properties passed to the container                        | Optional                                                                                      |
+| Param    | Type              | Description                                                                                   | Optional / Required |
+| -------- | ----------------- | --------------------------------------------------------------------------------------------- | ------------------- |
+| selector | Function          | function selector, for selecting data from the state                                          | Optional            |
+| actions  | Function / Object | an object from event generator functions or a function that creates an event generator object | Optional            |
+| ownProps | any               | properties passed to the container                                                            | Optional            |
 
--   **Return value**: props - resulting container properties obtained as a Union:
-    -   private properties of the container
-    -   properties obtained from the application state
-    -   properties obtained from event generators for sending actions to stor using dispatch
+**Return value**: object
+| Param | Type | Description |
+| -------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| props | object | resulting container properties obtained as a Union: private properties of the container + properties obtained from the application state + properties obtained from event generators for sending actions to stor using dispatch |
+| actions | Object | An object with methods to generate events |
+| dispatch | Dispatch | Dispatch store's method |
 
 #### Example
 
 ```jsx
-const containerProps = useStore(selector, actionCreators, ownProps);
+const { props, actions, dispatch } = useStore({ selector, actions, ownProps });
 ```
 
 ### StoreProvider
