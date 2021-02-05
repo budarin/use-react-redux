@@ -32,7 +32,7 @@ interface IUseAppStore {
 
 interface IUseAppStoreResult {
     props: any;
-    actions: Record<string, any>;
+    actions?: Record<string, any>;
     dispatch: Dispatch;
 }
 
