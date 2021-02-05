@@ -117,9 +117,9 @@ const actionCreators = {
 
 const selector = (state) => state;
 const CounterContainer = (containerProps) => {
-    const containerProps = useAppStore({ selector, actions: actionCreators, containerProps });
+    const props = useAppStore({ selector, actions: actionCreators, containerProps });
 
-    return <Counter {...containerProps} />;
+    return <Counter {...props} />;
 };
 
 export default const App = () => (
