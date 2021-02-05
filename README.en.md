@@ -108,14 +108,14 @@ const reducer = (state = initialState, action) => {
     }
 };
 
-const actionCreators = {
+const actions = {
     increment: () => ({ type: 'INCREMENT' }),
     decrement: () => ({ type: 'DECREMENT' })
 };
 
 const selector = (state) => state;
 const CounterContainer = (containerProps) => {
-    const props = useAppStore({ selector, actions: actionCreators, containerProps });
+    const props = useAppStore({ selector, actions, containerProps });
 
     return <Counter {...props} />;
 };
