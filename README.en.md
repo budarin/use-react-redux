@@ -204,11 +204,11 @@ Input parameter - an object:
 | containerProps | any               | properties passed to the container                                                            | Optional            |
 
 **Return value**: object
-| Param | Type | Description |
-| -------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| props | object | resulting container properties obtained as a Union: private properties of the container + properties obtained from the application state + properties obtained from event generators for sending actions to stor using dispatch |
-| actions | Object | An object with methods to generate events |
-| dispatch | Dispatch | Dispatch store's method |
+| Param | Type | Description | Optional / Required |
+| -------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------- |
+| props | object | resulting container properties obtained as a Union: private properties of the container + properties obtained from the application state + properties obtained from event generators for sending actions to stor using dispatch | Optional |
+| actions | Object | An object with methods to generate events | Optional |
+| dispatch | Dispatch | Dispatch store's method | Required |
 
 #### Example
 
