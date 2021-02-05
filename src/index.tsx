@@ -20,8 +20,8 @@ const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffec
 interface IAppStoreProvider {
     children: React.ReactNode;
     reducer: Reducer<any>;
-    initialState: any;
-    middlewares: Array<Middleware>;
+    initialState?: any;
+    middlewares?: Array<Middleware>;
 }
 
 interface IUseAppStore {
