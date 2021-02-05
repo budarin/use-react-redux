@@ -194,7 +194,7 @@ const { useStore, StoreProvider } = createStorage();
 
 ### useStore
 
-A hook that connects the container to the app state for a pair of contests specified when creating it.
+A hook that connects the container to the store to get data and send it actions.
 Input parameter - an object:
 
 | Param          | Type              | Description                                                                                   | Optional / Required |
