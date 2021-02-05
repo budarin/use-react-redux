@@ -135,7 +135,7 @@ export default const App = () => (
 
 Вот и все!
 
-Размер подключаемого минифицированного кода около 3.5 кб и [1.6 кб](https://bundlephobia.com/result?p=@budarin/use-react-redux) в сжатом виде.
+Размер подключаемого минифицированного кода около 4.5 кб и [~2 кб](https://bundlephobia.com/result?p=@budarin/use-react-redux) в сжатом виде.
 
 Библиотека полностью консистентна в Concurent Mode и даже немного более производительна чем react-redux !
 

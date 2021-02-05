@@ -133,7 +133,7 @@ export default const App = () => (
 
 That's it!
 
-The size of the plug-in minified code is about 3.5 KB and [1.6 KB](https://bundlephobia.com/result?p=@budarin/use-react-redux) in compressed form.
+The size of the plug-in minified code is about 4.5 KB and [~ 2 KB](https://bundlephobia.com/result?p=@budarin/use-react-redux) in compressed form.
 
 The library is completely consistent in Concurrent Mode and is even slightly more productive than react-redux!
 
