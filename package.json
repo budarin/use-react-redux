@@ -27,9 +27,9 @@
         "node": ">=10"
     },
     "scripts": {
-        "build": "rollup -c",
+        "build": "rm ./dist -r -f && rollup -c",
         "start": "rollup -c -w",
-        "prepublish": "sh rm ./dist -r -f && run-s build",
+        "prepublish": "run-s build",
         "publish:it": "npm publish --access public",
         "test": "echo \"no test specified\" && exit 0",
         "test_": "run-s test:unit test:lint test:build",
