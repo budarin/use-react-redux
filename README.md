@@ -184,7 +184,7 @@ window.setTimeout(
 
 ### createStorage
 
-Функция, которая создает хук `useStore` и компонент `StoreProvider` для, указанных при его создании, пары контестов.
+Функция, которая создает хук `useStore` и компонент `StoreProvider` для доступа к новому хранилищу.
 
 -   **Возвращаемое значение**: объект { useStore, StoreProvider }
 

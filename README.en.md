@@ -182,7 +182,7 @@ window.setTimeout(
 
 ### createStorage
 
-Function that creates the `useStore`hook and the `StoreProvider` component for a pair of contests specified when creating It.
+Function that creates the `useStore`hook and the `StoreProvider` to access the new storage.
 
 -   **Return value**: {useStore, StoreProvider object }
 
