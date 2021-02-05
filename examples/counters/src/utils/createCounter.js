@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const createCounter = (no) => ({ counter, actions }) => {
+export const createCounter = (no) => ({ props: { counter }, actions }) => {
     return (
         <div>
             <p>

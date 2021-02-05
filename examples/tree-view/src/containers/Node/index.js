@@ -15,7 +15,11 @@ const createNodeSelector = () =>
 
 const ConnectedNode = (ownProps) => {
     const selector = useMemo(createNodeSelector, []);
-    const containerProps = useAppStore(selector, actionCreators, ownProps);
+    const containerProps = useAppStore({
+        selector,
+        actions: actionCreators,
+        ownProps,
+    });
 
     return <Node {...containerProps} />;
 };

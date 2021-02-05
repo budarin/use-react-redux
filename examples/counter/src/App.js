@@ -2,11 +2,13 @@ import appMiddlewares from './utils/middlewares';
 import { useAppStore, AppStoreProvider } from './utils/storage';
 import { initialState, reducer, selector, actionCreators } from './utils/duck';
 
-const Counter = ({ counter, actions }) => {
+const Counter = (counterProps) => {
+    const { props, actions } = counterProps;
+
     return (
         <div>
             <p>
-                Счетчик: {counter}
+                Счетчик: {props.counter}
                 <br />
                 <button onClick={actions.increment}>Увеличить</button>{' '}
                 <button onClick={actions.decrement}>Уменьшить</button>
@@ -16,7 +18,10 @@ const Counter = ({ counter, actions }) => {
 };
 
 const CounterContainer = () => {
-    const containerProps = useAppStore(selector, actionCreators);
+    const containerProps = useAppStore({
+        selector,
+        actions: actionCreators,
+    });
 
     return <Counter {...containerProps} />;
 };

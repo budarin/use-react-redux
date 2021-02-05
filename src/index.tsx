@@ -32,7 +32,7 @@ interface IUseAppStore {
 
 interface IUseAppStoreResult {
     props: any;
-    actions: () => Record<string, any>;
+    actions: Record<string, any>;
     dispatch: Dispatch;
 }
 
@@ -90,7 +90,7 @@ export const createStorage = () => {
         containerProps = emptyObject,
     }: IUseAppStore): IUseAppStoreResult => {
         const dispatch = useContext<Dispatch>(DispatchContext);
-        const dispatchProps = useMemo(() => getDispatchedProps(actions, dispatch, containerProps), [
+        const dispatchProps = useMemo(getDispatchedProps(actions, dispatch, containerProps), [
             actions,
             dispatch,
             containerProps,

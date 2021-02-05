@@ -3,7 +3,9 @@ export const actionCreators = {
     decrement: () => ({ type: 'DECREMENT' }),
 };
 
-export const selector = (state) => state;
+export const selector = (state) => {
+    return state;
+};
 
 export const initialState = {
     counter: 0,
