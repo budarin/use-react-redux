@@ -114,8 +114,8 @@ const actionCreators = {
 };
 
 const selector = (state) => state;
-const CounterContainer = (ownProps) => {
-    const containerProps = useAppStore({ selector, actions: actionCreators, ownProps });
+const CounterContainer = (containerProps) => {
+    const containerProps = useAppStore({ selector, actions: actionCreators, containerProps });
 
     return <Counter {...containerProps} />;
 };
@@ -197,11 +197,11 @@ const { useStore, StoreProvider } = createStorage();
 A hook that connects the container to the app state for a pair of contests specified when creating it.
 Input parameter - an object:
 
-| Param    | Type              | Description                                                                                   | Optional / Required |
-| -------- | ----------------- | --------------------------------------------------------------------------------------------- | ------------------- |
-| selector | Function          | function selector, for selecting data from the state                                          | Optional            |
-| actions  | Function / Object | an object from event generator functions or a function that creates an event generator object | Optional            |
-| ownProps | any               | properties passed to the container                                                            | Optional            |
+| Param          | Type              | Description                                                                                   | Optional / Required |
+| -------------- | ----------------- | --------------------------------------------------------------------------------------------- | ------------------- |
+| selector       | Function          | function selector, for selecting data from the state                                          | Optional            |
+| actions        | Function / Object | an object from event generator functions or a function that creates an event generator object | Optional            |
+| containerProps | any               | properties passed to the container                                                            | Optional            |
 
 **Return value**: object
 | Param | Type | Description |
@@ -213,7 +213,7 @@ Input parameter - an object:
 #### Example
 
 ```jsx
-const { props, actions, dispatch } = useStore({ selector, actions, ownProps });
+const { props, actions, dispatch } = useStore({ selector, actions, containerProps });
 ```
 
 ### StoreProvider

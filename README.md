@@ -116,8 +116,8 @@ const actionCreators = {
 };
 
 const selector = (state) => state;
-const CounterContainer = (ownProps) => {
-    const containerProps = useAppStore({ selector, actions: actionCreators, ownProps });
+const CounterContainer = (containerProps) => {
+    const containerProps = useAppStore({ selector, actions: actionCreators, containerProps });
 
     return <Counter {...containerProps} />;
 };
@@ -199,11 +199,11 @@ const { useStore, StoreProvider } = createStorage();
 Хук, который подключает контейнер к состоянию приложения для, указанных при его создании, пары контестов.
 Входной параметр - объект:
 
-| Param    | Type              | Description                                                                             | Optional / Required |
-| -------- | ----------------- | --------------------------------------------------------------------------------------- | ------------------- |
-| selector | Function          | функция селектор, для выборки данных из состояния                                       | Optional            |
-| actions  | Function / Object | объект из функций генераторов событий или функция, создающая объект генераторов событий | Optional            |
-| ownProps | any               | свойства, пробрасываемые контейнеру                                                     | Optional            |
+| Param          | Type              | Description                                                                             | Optional / Required |
+| -------------- | ----------------- | --------------------------------------------------------------------------------------- | ------------------- |
+| selector       | Function          | функция селектор, для выборки данных из состояния                                       | Optional            |
+| actions        | Function / Object | объект из функций генераторов событий или функция, создающая объект генераторов событий | Optional            |
+| containerProps | any               | свойства, пробрасываемые контейнеру                                                     | Optional            |
 
 **Возвращаемое значение**: объект
 | Param | Type | Description |
@@ -215,7 +215,7 @@ const { useStore, StoreProvider } = createStorage();
 #### Пример
 
 ```jsx
-const { props, actions, dispatch } = useStore({ selector, actions, ownProps });
+const { props, actions, dispatch } = useStore({ selector, actions, containerProps });
 ```
 
 ### StoreProvider

@@ -13,15 +13,15 @@ const createNodeSelector = () =>
         childCount: item ? item.childIds.length : 0,
     }));
 
-const ConnectedNode = (ownProps) => {
+const ConnectedNode = (containerProps) => {
     const selector = useMemo(createNodeSelector, []);
-    const containerProps = useAppStore({
+    const props = useAppStore({
         selector,
         actions: actionCreators,
-        ownProps,
+        containerProps,
     });
 
-    return <Node {...containerProps} />;
+    return <Node {...props} />;
 };
 
 export default memo(ConnectedNode);

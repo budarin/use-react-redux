@@ -3,7 +3,7 @@ import React from 'react';
 
 import ConnectedNode from '../../containers/Node';
 
-const Node = ({ actions, parentId, id, counter, childIds, childCount }) => {
+const Node = ({ actions, props: { parentId, id, counter, childIds, childCount } }) => {
     const handleIncrementClick = () => {
         actions.increment(id);
     };

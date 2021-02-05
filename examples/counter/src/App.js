@@ -18,12 +18,12 @@ const Counter = (counterProps) => {
 };
 
 const CounterContainer = () => {
-    const containerProps = useAppStore({
+    const props = useAppStore({
         selector,
         actions: actionCreators,
     });
 
-    return <Counter {...containerProps} />;
+    return <Counter {...props} />;
 };
 
 const App = () => (
