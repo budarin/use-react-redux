@@ -11,12 +11,12 @@ interface ActionCreators {
 export const getDispatchedProps = (
     actions: ActionCreators | IHash<ActionCreator>,
     dispatch: Dispatch,
-    ownProps = emptyObject,
+    containerProps = emptyObject,
 ) => (): Record<string, any> => {
     // Если actions <-> mapDispatchToProps - вызываем ее и возвращаем результат
     if (typeof actions === 'function') {
         // as mapDispatchToProps
-        return actions(ownProps, dispatch);
+        return actions(containerProps, dispatch);
     }
 
     // создаем из actionCreators - функции генерирующие методы вызывающие dispatch со сгенерированным payload
