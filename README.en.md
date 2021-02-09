@@ -76,15 +76,43 @@ const loggerMiddleware = (store) => (next) => (action) => {
 export default const appMiddlewares = [loggerMiddleware];
 ```
 
+let's describe the redux components of our application
+
+ducks.js
+
+```javascript
+export const initialState = { counter: 0 };
+
+export const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'INCREMENT':
+            return { counter: state.counter + 1 };
+        case 'DECREMENT':
+            return { counter: state.counter - 1 };
+        default:
+            return state;
+    }
+};
+
+export const selector = (state) => state;
+
+export const actions = {
+    increment: () => ({ type: 'INCREMENT' }),
+    decrement: () => ({ type: 'DECREMENT' }),
+};
+```
+
 it remains to implement the application
 
 app.js
 
 ```javascript
 import { useAppStore, AppStoreProvider } from './app-store';
-import appMiddlewares from './middlewares';
 
-const Counter = ({ counter: { counter }, actions }) => (
+import appMiddlewares from './middlewares';
+import {initialState, reducer, actions, selector } from './ducks';
+
+const Counter = ({ props: { counter }, actions }) => (
     <div>
         <p>
             Clicked: {counter} times
@@ -96,27 +124,8 @@ const Counter = ({ counter: { counter }, actions }) => (
     </div>
 );
 
-const initialState = { counter: 0 };
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'INCREMENT':
-            return  { counter: state.counter + 1 };
-        case 'DECREMENT':
-            return { counter: state.counter - 1 };
-        default:
-            return state;
-    }
-};
-
-const actions = {
-    increment: () => ({ type: 'INCREMENT' }),
-    decrement: () => ({ type: 'DECREMENT' })
-};
-
-const selector = (state) => state;
 const CounterContainer = (containerProps) => {
     const props = useAppStore({ selector, actions, containerProps });
-
     return <Counter {...props} />;
 };
 

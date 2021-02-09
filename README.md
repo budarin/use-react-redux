@@ -78,13 +78,41 @@ const loggerMiddleware = (store) => (next) => (action) => {
 export default const appMiddlewares = [loggerMiddleware];
 ```
 
+опишем составляющие нашего приложения
+
+ducks.js
+
+```javascript
+export const initialState = { counter: 0 };
+
+export const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'INCREMENT':
+            return { counter: state.counter + 1 };
+        case 'DECREMENT':
+            return { counter: state.counter - 1 };
+        default:
+            return state;
+    }
+};
+
+export const selector = (state) => state;
+
+export const actions = {
+    increment: () => ({ type: 'INCREMENT' }),
+    decrement: () => ({ type: 'DECREMENT' }),
+};
+```
+
 осталось реализовать приложение
 
 app.js
 
 ```javascript
 import { useAppStore, AppStoreProvider } from './app-store';
+
 import appMiddlewares from './middlewares';
+import {initialState, reducer, actions, selector } from './ducks';
 
 const Counter = ({ props: { counter }, actions }) => (
     <div>
@@ -98,34 +126,15 @@ const Counter = ({ props: { counter }, actions }) => (
     </div>
 );
 
-const initialState = { counter: 0 };
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'INCREMENT':
-            return  { counter: state.counter + 1 };
-        case 'DECREMENT':
-            return { counter: state.counter - 1 };
-        default:
-            return state;
-    }
-};
-
-const actions = {
-    increment: () => ({ type: 'INCREMENT' }),
-    decrement: () => ({ type: 'DECREMENT' })
-};
-
-const selector = (state) => state;
 const CounterContainer = (containerProps) => {
     const props = useAppStore({ selector, actions, containerProps });
-
     return <Counter {...props} />;
 };
 
 export default const App = () => (
     <AppStoreProvider
-        initialState={initialState}
         reducer={reducer}
+        initialState={initialState}
         middlewares={appMiddlewares}
     >
         <CounterContainer />
