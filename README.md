@@ -75,10 +75,10 @@ const loggerMiddleware = (store) => (next) => (action) => {
     return next(action);
 };
 
-export default const appMiddlewares = [loggerMiddleware];
+export const appMiddlewares = [loggerMiddleware];
 ```
 
-опишем составляющие нашего приложения
+опишем составляющие нашего redux хранилища
 
 ducks.js
 
@@ -104,17 +104,12 @@ export const actions = {
 };
 ```
 
-осталось реализовать приложение
+опишем компонент Counter
 
-app.js
+Counter.jsx
 
 ```javascript
-import { useAppStore, AppStoreProvider } from './app-store';
-
-import appMiddlewares from './middlewares';
-import {initialState, reducer, actions, selector } from './ducks';
-
-const Counter = ({ props: { counter }, actions }) => (
+export const Counter = ({ props: { counter }, actions }) => (
     <div>
         <p>
             Clicked: {counter} times
@@ -125,6 +120,18 @@ const Counter = ({ props: { counter }, actions }) => (
         </p>
     </div>
 );
+```
+
+осталось реализовать приложение
+
+app.js
+
+```javascript
+import { useAppStore, AppStoreProvider } from './app-store';
+
+import { Counter } from './Counter';
+import { appMiddlewares } from './middlewares';
+import { initialState, reducer, actions, selector } from './ducks';
 
 const CounterContainer = (containerProps) => {
     const props = useAppStore({ selector, actions, containerProps });
