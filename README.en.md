@@ -76,7 +76,7 @@ const loggerMiddleware = (store) => (next) => (action) => {
 export const appMiddlewares = [loggerMiddleware];
 ```
 
-let's describe the redux components of our redux store
+let's describe the components of our redux store
 
 ducks.js
 
