@@ -1,6 +1,6 @@
 {
     "name": "@budarin/use-react-redux",
-    "version": "1.1.8",
+    "version": "1.1.9",
     "description": "React-redux based on React Context and React Hooks.",
     "keywords": [
         "react",
@@ -27,7 +27,7 @@
         "node": ">=10"
     },
     "scripts": {
-        "build": "rm ./dist -r -f && rollup -c",
+        "build": "sh ./scripts/build.sh",
         "start": "rollup -c -w",
         "prepublish": "run-s build",
         "publish:it": "npm publish --access public",
