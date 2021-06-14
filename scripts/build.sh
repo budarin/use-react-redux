@@ -1,2 +1,2 @@
-sh rm ./dist -r -f;
+rm ./dist -r -f;
 rollup -c;
