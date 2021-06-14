@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { createContext, useContextSelection } from 'use-context-selection';
 import { useLayoutEffect, useEffect, useReducer, ClassAttributes, useContext, useMemo, useRef } from 'react';
 
-import { getDispatchedProps } from './utils/getDispatchedProps';
+import { ActionCreator, ActionCreators, getDispatchedProps } from './utils/getDispatchedProps';
 import { setBatch, getBatch } from './utils/batch';
 
 export const batch = getBatch();
@@ -90,11 +90,10 @@ export const createStorage = () => {
         containerProps = emptyObject,
     }: IUseAppStore): IUseAppStoreResult => {
         const dispatch = useContext<Dispatch>(DispatchContext);
-        const dispatchProps = useMemo(getDispatchedProps(actions, dispatch, containerProps), [
-            actions,
-            dispatch,
-            containerProps,
-        ]);
+        const dispatchProps = useMemo(
+            getDispatchedProps((actions as unknown) as ActionCreators | IHash<ActionCreator>, dispatch, containerProps),
+            [actions, dispatch, containerProps],
+        );
         const stateProps = useContextSelection<any>(StateContext, (state: any) => selector(state, containerProps));
 
         return useMemo(

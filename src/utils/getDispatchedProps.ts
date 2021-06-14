@@ -1,10 +1,10 @@
 const emptyObject: React.ClassAttributes<any> = {};
 
-interface ActionCreator {
-    (...args: any[]): Dispatch;
+export interface ActionCreator {
+    (...args: any[]): Action;
 }
 
-interface ActionCreators {
+export interface ActionCreators {
     (props: any, dispatch: Dispatch): IHash<ActionCreator>;
 }
 
