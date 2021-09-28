@@ -1,6 +1,6 @@
 {
     "name": "@budarin/use-react-redux",
-    "version": "1.1.12",
+    "version": "1.1.13",
     "description": "React-redux based on React Context and React Hooks.",
     "keywords": [
         "react",
@@ -40,50 +40,50 @@
         "upgrade:deps": "yarn upgrade-interactive --latest && yarn upgrade"
     },
     "dependencies": {
-        "redux": "^4.1.0",
-        "use-context-selection": "^1.4.2"
+        "redux": "^4.1.1",
+        "use-context-selection": "^1.4.3"
     },
     "peerDependencies": {
         "react": "^17.0.0",
         "react-dom": "^17.0.0"
     },
     "devDependencies": {
-        "@testing-library/react": "^11.2.7",
-        "@testing-library/react-hooks": "^7.0.0",
-        "@types/jest": "^26.0.23",
-        "@types/react": "^17.0.11",
-        "@types/react-dom": "^17.0.7",
-        "@types/react-redux": "^7.1.16",
+        "@testing-library/react": "^12.1.1",
+        "@testing-library/react-hooks": "^7.0.2",
+        "@types/jest": "^27.0.2",
+        "@types/react": "^17.0.24",
+        "@types/react-dom": "^17.0.9",
+        "@types/react-redux": "^7.1.18",
         "@types/redux": "^3.6.31",
-        "@typescript-eslint/eslint-plugin": "^4.27.0",
-        "@typescript-eslint/parser": "^4.27.0",
+        "@typescript-eslint/eslint-plugin": "^4.32.0",
+        "@typescript-eslint/parser": "^4.32.0",
         "babel-core": "^7.0.0-bridge.0",
         "babel-eslint": "^10.0.3",
         "cross-env": "^7.0.3",
-        "eslint": "^7.28.0",
+        "eslint": "^7.32.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-config-standard": "^16.0.3",
         "eslint-config-standard-react": "^11.0.1",
-        "eslint-plugin-import": "^2.23.4",
+        "eslint-plugin-import": "^2.24.2",
         "eslint-plugin-node": "^11.0.0",
-        "eslint-plugin-prettier": "^3.4.0",
+        "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-promise": "^5.1.0",
-        "eslint-plugin-react": "^7.24.0",
+        "eslint-plugin-react": "^7.26.0",
         "eslint-plugin-standard": "^5.0.0",
-        "gh-pages": "^3.2.1",
+        "gh-pages": "^3.2.3",
         "npm-run-all": "^4.1.5",
-        "prettier": "^2.3.1",
+        "prettier": "^2.4.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-scripts": "^4.0.3",
         "react-test-renderer": "^17.0.2",
-        "rollup": "^2.52.0",
+        "rollup": "^2.57.0",
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-copy": "^3.4.0",
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-typescript2": "^0.30.0",
-        "typescript": "^4.3.3"
+        "typescript": "^4.4.3"
     }
 }
